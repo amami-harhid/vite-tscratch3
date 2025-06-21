@@ -3,7 +3,7 @@
     "target": "esnext",
     "useDefineForClassFields": true,
     "module": "esnext",
-    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "lib": ["esnext", "DOM", "DOM.Iterable"],
     "skipLibCheck": true,
     "baseUrl": "./",
     "paths": {
@@ -20,10 +20,10 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "erasableSyntaxOnly": false,
+    //"erasableSyntaxOnly": true,  // <---- 有効にすると enum がエラーになる
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": ["./src/**/*.ts", "./index.html", "./sample/**/*.ts"],
+  "include": ["./src/**/*.ts", "./index.html"],
   "exclude": ["./node_modules/*"],
 }
