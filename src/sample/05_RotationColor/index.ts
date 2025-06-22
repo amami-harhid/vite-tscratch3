@@ -84,7 +84,7 @@ Pg.prepare = async function prepare() {
     dot.SvgText.add( Constant.RedBall, Ball(RedBallColor) );
     dot.SvgText.add( Constant.YellowBall, Ball(YellowBallColor) );
     dot.SvgText.add( Constant.BlueBall, Ball(BlueBallColor) );
-    dot.Looks.Size.scale = {w:30, h:30};
+    dot.Looks.Size.scale = [30, 30];
     dot.Motion.Position.xy = [0, 0];
     dot.Looks.hide();
 
