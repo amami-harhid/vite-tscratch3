@@ -1,3 +1,6 @@
+/**
+ * このファイルの内容を変更してはいけません。
+ */
 {
   "compilerOptions": {
     "target": "esnext",
