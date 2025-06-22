@@ -23,14 +23,14 @@ let stage: Stage;
 let controller: Sprite;
 /** ドット */
 let dot: Sprite;
-/** ボール(赤) */
-let redBall: Sprite;
-/** ボール(黄) */
-let yellowBall: Sprite;
-/** ボール(青) */
-let blueBall: Sprite;
 /** テキスト */
 let text: Sprite;
+// ---------------------------------
+// 色
+// ---------------------------------
+const RedBallColor = '#ff0000';
+const YellowBallColor = '#ffff00';
+const BlueBallColor = '#003fff';
 // ---------------------------------
 // アセットをインポートする
 // ---------------------------------
@@ -38,6 +38,7 @@ import ControllerSvg from './assets/controller.svg';
 import ChantingMp3 from './assets/chanting8bit.mp3';
 import DamageMp3 from './assets/damage8bit.mp3';
 import TogemaruWoff from './assets/TogeMaruGothic-700-Bold.woff';
+import ShortMistery001Mp3 from './assets/Short_mistery_001.mp3';
 
 // --------------------------------
 // 事前ロード処理
@@ -47,6 +48,7 @@ Pg.preload = async function preload( this: PgMain ) {
     this.Sound.load( ChantingMp3, Constant.Chanting );
     this.Sound.load( DamageMp3, Constant.Damage );
     this.Font.load( TogemaruWoff, Constant.Togemaru );
+    this.Sound.load( ShortMistery001Mp3, Constant.ShortMistery001 );
 }
 
 // --------------------------------
@@ -59,6 +61,7 @@ Pg.prepare = async function prepare() {
     //----------------
     stage = new Lib.Stage();
     stage.SvgText.add( Constant.BlackBground, BlackBackdrop );
+    stage.Sound.add( Constant.ShortMistery001 );
 
     //----------------
     // スプライト（コントローラー）を作る
@@ -71,39 +74,12 @@ Pg.prepare = async function prepare() {
     // スプライト（ドット）を作る
     //----------------
     dot = new Lib.Sprite('dot');
-    dot.SvgText.add( Constant.RedBall, Ball("#ff0000") );
-    dot.SvgText.add( Constant.YellowBall, Ball("#ffff00") );
-    dot.SvgText.add( Constant.RedBall, Ball("#003fff") );
+    dot.SvgText.add( Constant.RedBall, Ball(RedBallColor) );
+    dot.SvgText.add( Constant.YellowBall, Ball(YellowBallColor) );
+    dot.SvgText.add( Constant.BlueBall, Ball(BlueBallColor) );
     dot.Looks.Size.scale = [10,10];
     dot.Motion.Position.xy = [0, 0];
     dot.Looks.hide();
-
-    //----------------
-    // スプライト（赤ボール）を作る
-    //----------------
-    redBall = new Lib.Sprite('redBall');
-    redBall.SvgText.add( Constant.RedBall, Ball("#ff0000") );
-    redBall.Looks.Size.scale = [10,10];
-    redBall.Motion.Position.xy = [0, 0];
-    redBall.Looks.hide();
-
-    //----------------
-    // スプライト（黄ボール）を作る
-    //----------------
-    yellowBall = new Lib.Sprite('yellowBall');
-    yellowBall.SvgText.add( Constant.RedBall, Ball("#ffff00") );
-    yellowBall.Looks.Size.scale = [60,60];
-    yellowBall.Motion.Position.xy = [-220, -155];
-    yellowBall.Looks.hide();
-
-    //----------------
-    // スプライト（青ボール）を作る
-    //----------------
-    blueBall = new Lib.Sprite('blueBall');
-    blueBall.SvgText.add( Constant.RedBall, Ball("#003fff") );
-    blueBall.Looks.Size.scale = [60,60];
-    blueBall.Motion.Position.xy = [-220, -155];
-    blueBall.Looks.hide();
 
     //----------------
     // スプライト（テキスト）を作る
@@ -234,26 +210,71 @@ Pg.setting = async function setting() {
     
     dot.Event.whenFlag( async function*( this:Sprite ){
         this.Looks.hide();
+        const CostumeNames = this.Looks.Costume.names;
+        console.log('CostumeNames',CostumeNames);
         for(;;) {
             // ランダムな位置に移動
+            this.Motion.Move.randomPosition();
+            this.Motion.Position.x *= 0.5;
+            if(this.Motion.Position.x > 0){
+                this.Motion.Position.x += 100;
+            }else{
+                this.Motion.Position.x -= 100;
+            }
+            this.Motion.Position.y *= 0.5;
+            if(this.Motion.Position.y > 0){
+                this.Motion.Position.y += 100;
+            }else{
+                this.Motion.Position.y -= 100;
+            }
             // ランダムなコスチュームに変更
+            const idx = Lib.getRandomValueInRange(0, CostumeNames.length-1);
+
+            const costumeName = CostumeNames[ idx ];
+            this.Looks.Costume.name = costumeName;
+            console.log('idx, this.Looks.Costume.name', idx, costumeName);
             // クローンを作る
+            this.Control.clone();
             // ランダムな時間だけ待つ
+            await this.Control.wait( Lib.getRandomValueInRange(0.5, 3.0, true)); // Lib.randomInRange(0, 3);
+            if(point < 0) {
+                this.Control.stopOtherScripts(this);
+                break;
+            }
             yield;
         }
     });
-
-    dot.Control.whenCloned( async function( this:Sprite ){
-        this.Looks.show();
+    let point = 10;
+    dot.Control.whenCloned( async function*( this:Sprite ){
+        const costumeName = this.Looks.Costume.name; 
         // コントローラーへ向く
-        // 少しずつ進む
-        // コントローラーに触っていて、赤色が赤色へ、黄色が黄色へ、青色が青色に触れたら
-        // -- 音を鳴らす
-        // -- 点数を増やす
-        // -- クローンを消す
-        // コントローラーに触っていて、同じ色に触れていないとき
-        // -- 音を鳴らす
-        // -- HP を減らす
+        this.Motion.Point.toTarget(controller);
+        const STEPS = Lib.getRandomValueInRange(1, 2, true);
+        console.log('STEPS', STEPS);
+        this.Looks.show();
+        for(;;) {
+            // 少しずつ進む
+            this.Motion.Move.steps(STEPS);
+            if( this.Sensing.isTouchingToSprites([controller])) {
+                this.Motion.Move.steps(STEPS);
+                // コントローラーに触っていて、赤色が赤色へ、黄色が黄色へ、青色が青色に触れたら
+                if( (costumeName == Constant.RedBall && this.Sensing.isTouchingToColor(RedBallColor)) ||
+                    (costumeName == Constant.YellowBall && this.Sensing.isTouchingToColor(YellowBallColor)) ||
+                    (costumeName == Constant.BlueBall && this.Sensing.isTouchingToColor(BlueBallColor)) ) {
+                    // -- 音を鳴らす
+                    // -- 点数を増やす( +2 )
+                    point += 2;
+                }else{
+                    point -= 1;
+                }
+                console.log('point=', point);
+                this.Looks.hide();
+                break;
+            }
+            yield;
+        }
+        await this.Control.wait(1);
         // -- クローンを削除する
+        this.Control.remove();
     });
 }
