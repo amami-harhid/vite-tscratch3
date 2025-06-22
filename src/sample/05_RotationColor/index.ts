@@ -79,10 +79,12 @@ Pg.prepare = async function prepare() {
     // スプライト（ドット）を作る
     //----------------
     dot = new Lib.Sprite('dot');
+    dot.Sound.add( Constant.Chanting );
+    dot.Sound.add( Constant.Damage );
     dot.SvgText.add( Constant.RedBall, Ball(RedBallColor) );
     dot.SvgText.add( Constant.YellowBall, Ball(YellowBallColor) );
     dot.SvgText.add( Constant.BlueBall, Ball(BlueBallColor) );
-    dot.Looks.Size.scale = [10,10];
+    dot.Looks.Size.scale = {w:30, h:30};
     dot.Motion.Position.xy = [0, 0];
     dot.Looks.hide();
 
@@ -294,9 +296,11 @@ Pg.setting = async function setting() {
                     (costumeName == Constant.YellowBall && this.Sensing.isTouchingToColor(YellowBallColor)) ||
                     (costumeName == Constant.BlueBall && this.Sensing.isTouchingToColor(BlueBallColor)) ) {
                     // -- 音を鳴らす
+                    this.Sound.play( Constant.Chanting );
                     // -- 点数を増やす( +2 )
                     point += 2;
                 }else{
+                    this.Sound.play( Constant.Damage );
                     point -= 1;
                 }
                 console.log('point=', point);
