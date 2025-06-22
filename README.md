@@ -10,11 +10,15 @@ Typescriptはブラウザではそのまま動かない仕組みですので、�
 『Vite(ヴィート)』では、コンソールで次のようにたたいておけば、/sample/01_practice/ の中のTypescriptを高速ビルドしてブラウザーへも自動表示してくれます。
 
 ```
-$ vite /sample/01_practice/
+$ vite --open /sample/01_practice/
 ```
 しかもしかも、表示中にコードを修正したら「自動ビルド」＋と「自動リロード」をしてくれるという優れもの！
 コーディングに集中できてとってもよさげです。
 
+```
+$ npm run dev /sample/01_practice/
+```
+でも動きます。
 
 # TSファイルを置く場所
 
