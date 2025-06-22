@@ -1,4 +1,4 @@
-import type {ISprite as Sprite} from "@Type/sprite";
+import type { ISprite as Sprite } from '@Type/sprite';
 const color = 'red';
 const fontSize = 24;
 const fontStyle = 'normal';

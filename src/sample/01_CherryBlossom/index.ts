@@ -5,9 +5,17 @@ import {Pg, Lib} from "@tscratch3/tscratch3likejs/s3lib-importer";
 import type {IPgMain as PgMain} from "@Type/pgMain";
 import type {ISprite as Sprite} from "@Type/sprite";
 import type {IStage as Stage} from "@Type/stage";
+
+// ---------------------------------
+// Subをインポートする
+// ---------------------------------
 import { Constant } from './sub/constants';
 import { addSvg } from './sub/text';
 import { BlackBackdrop } from './sub/blackBacdrop';
+
+// ---------------------------------
+// アセットをインポートする
+// ---------------------------------
 import ForestImg from './assets/Forest.png';
 import CherryImg from './assets/Cherry.svg';
 import ClassicalPianoSound from './assets/ClassicalPiano.wav';
@@ -15,16 +23,25 @@ import TogeMaruGothicFont from './assets/TogeMaruGothic-700-Bold.woff';
 
 Pg.title = "【01_CherryBlossom】桜の花びらが舞う"
 
+//---------------------------------
+// ステージ、スプライト変数の定義
+//---------------------------------
 let stage: Stage;
 let textSprite: Sprite;
 let cherry: Sprite;
 
+// --------------------------------
+// 事前ロード処理
+// --------------------------------
 Pg.preload = async function preload(this:PgMain) {
     this.Image.load(ForestImg, Constant.Forest );
     this.Image.load(CherryImg, Constant.Cherry);
     this.Sound.load(ClassicalPianoSound, Constant.ClassicPiano );
     this.Font.load(TogeMaruGothicFont, Constant.Togemaru);
 }
+// --------------------------------
+// 事前準備処理
+// --------------------------------
 Pg.prepare = async function prepare() {
     // ステージを作る
     stage = new Lib.Stage();
@@ -41,8 +58,10 @@ Pg.prepare = async function prepare() {
     cherry.Image.add( Constant.Cherry );
     cherry.Looks.Size.scale = [20, 20];
     cherry.Looks.hide();
-
 }
+// --------------------------------
+// イベント定義処理
+// --------------------------------
 Pg.setting = async function setting() {
 
     stage.Event.whenFlag(async function*(this:Stage){

@@ -1,7 +1,7 @@
 {
   "name": "ts3vite",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.0.1",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -10,7 +10,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.29.0",
-    "@types/events": "^3.0.3",
+    "@tscratch3/tscratch3likejs": "^1.0.0-beta.7",
     "@types/glob": "^8.1.0",
     "eslint": "^9.29.0",
     "eslint-plugin-erasable-syntax-only": "^0.3.1",
@@ -19,9 +19,5 @@
     "typescript-eslint": "^8.34.1",
     "vite": "^6.3.5",
     "vite-plugin-top-level-await": "^1.5.0"
-  },
-  "dependencies": {
-    "@tscratch3/tscratch3likejs": "^1.0.0-beta.6",
-    "events": "^3.3.0"
   }
 }
