@@ -40,6 +40,11 @@ import DamageMp3 from './assets/damage8bit.mp3';
 import TogemaruWoff from './assets/TogeMaruGothic-700-Bold.woff';
 import ShortMistery001Mp3 from './assets/Short_mistery_001.mp3';
 
+// ---------------------------------
+// その他変数
+// ---------------------------------
+let point = 0;
+
 // --------------------------------
 // 事前ロード処理
 // --------------------------------
@@ -107,6 +112,17 @@ Pg.prepare = async function prepare() {
         const textStr = text.SvgText.toSvg(textArr, fontSize, fontStyle, color, fontFamily);
         text.SvgText.add( Constant.Guide, textStr, fontFamily );    
     }
+    {
+        const fontSize = 35;
+        const fontStyle = 'bold';
+        const color = '#ff0000';
+        const fontFamily = Constant.Togemaru;
+        const textArr = [
+            "GameOver"
+        ];
+        const textStr = text.SvgText.toSvg(textArr, fontSize, fontStyle, color, fontFamily);
+        text.SvgText.add( Constant.GameOver, textStr, fontFamily );    
+    }
 
     text.Looks.show();
     // 幽霊の効果
@@ -137,6 +153,9 @@ Pg.setting = async function setting() {
             yield;
         }
     })
+    stage.Event.whenBroadcastReceived( Message.GameOver, async function(this:Sprite){
+        this.Control.stopOtherScripts(this);
+    });
     // 緑の旗が押されたときの動作    
     controller.Event.whenFlag(async function*( this: Sprite ){
         this.Looks.hide();
@@ -167,6 +186,11 @@ Pg.setting = async function setting() {
         this.Event.broadcast( Message.View );
         // 隠す
         this.Looks.hide();        
+    });
+    text.Event.whenBroadcastReceived( Message.GameOver, async function(this:Sprite){
+        this.Looks.Effect.set( Lib.ImageEffective.GHOST, 0 );
+        this.Looks.Costume.name = Constant.GameOver;
+        this.Looks.show();
     });
 
     // メッセージ(View)を受け取ったときの動作
@@ -207,9 +231,18 @@ Pg.setting = async function setting() {
             yield;
         }
     });
+    controller.Event.whenBroadcastReceived( Message.GameOver, async function(this:Sprite){
+        // 幽霊の効果
+        this.Looks.Effect.set( Lib.ImageEffective.GHOST, 90 );
+        this.Control.stopOtherScripts(this);
+    });
     
     dot.Event.whenFlag( async function*( this:Sprite ){
+        point = 20;
         this.Looks.hide();
+    });
+    // メッセージ(Start)を受け取ったときの動作
+    dot.Event.whenBroadcastReceived( Message.Start, async function*( this: Sprite ){
         const CostumeNames = this.Looks.Costume.names;
         console.log('CostumeNames',CostumeNames);
         for(;;) {
@@ -228,7 +261,7 @@ Pg.setting = async function setting() {
                 this.Motion.Position.y -= 100;
             }
             // ランダムなコスチュームに変更
-            const idx = Lib.getRandomValueInRange(0, CostumeNames.length-1);
+            const idx = Lib.randomInteger(0, CostumeNames.length-1);
 
             const costumeName = CostumeNames[ idx ];
             this.Looks.Costume.name = costumeName;
@@ -236,20 +269,19 @@ Pg.setting = async function setting() {
             // クローンを作る
             this.Control.clone();
             // ランダムな時間だけ待つ
-            await this.Control.wait( Lib.getRandomValueInRange(0.5, 3.0, true)); // Lib.randomInRange(0, 3);
+            await this.Control.wait( Lib.randomDecimal(0.2, 3));
             if(point < 0) {
-                this.Control.stopOtherScripts(this);
+                this.Event.broadcast(Message.GameOver);
                 break;
             }
             yield;
         }
     });
-    let point = 10;
     dot.Control.whenCloned( async function*( this:Sprite ){
         const costumeName = this.Looks.Costume.name; 
         // コントローラーへ向く
         this.Motion.Point.toTarget(controller);
-        const STEPS = Lib.getRandomValueInRange(1, 2, true);
+        const STEPS = Lib.randomDecimal(1, 2);
         console.log('STEPS', STEPS);
         this.Looks.show();
         for(;;) {
@@ -271,10 +303,18 @@ Pg.setting = async function setting() {
                 this.Looks.hide();
                 break;
             }
+            if( point < 0) {
+                // 幽霊の効果
+                this.Looks.Effect.set( Lib.ImageEffective.GHOST, 100 );
+            }
             yield;
         }
         await this.Control.wait(1);
         // -- クローンを削除する
         this.Control.remove();
+    });
+
+    dot.Event.whenBroadcastReceived( Message.GameOver, async function(this:Sprite){
+        this.Control.stopOtherScripts(this);
     });
 }

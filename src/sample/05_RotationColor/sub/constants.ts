@@ -11,6 +11,7 @@ export const Constant = {
     Togemaru: "Togemaru",
     Title: 'Title',
     Guide: 'Guide',
+    GameOver: 'GameOver',
 
     BlackBground: 'BlackBground',
     Maze1: 'Maze1',
