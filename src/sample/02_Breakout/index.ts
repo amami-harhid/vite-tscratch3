@@ -111,6 +111,7 @@ Pg.prepare = async function prepare() {
     //---------------------
     monitors = new Lib.Monitors();
     monitors.add( Constant.MonitorPoint, '得点');
+    monitors.get( Constant.MonitorPoint).scale = {w:100, h:100};
     monitors.get( Constant.MonitorPoint).hide();
     monitors.get( Constant.MonitorPoint).value = 0;
 }
@@ -154,8 +155,8 @@ Pg.setting = async function setting() {
     block.Event.whenBroadcastReceived( Message.Start, async function*( this: Sprite ){
         // 本体を隠す
         this.Looks.hide();
-        // 本体のY座標を 150 にする
-        this.Motion.Position.y = 150;
+        // 本体のY座標を 130 にする
+        this.Motion.Position.y = 130;
         // クローンの X座標の定義（配列）
         const xArr = [-160,-120,-80,-40, 0, 40, 80, 120, 160];
         // 縦に 5行、縦に xArrの要素数分の列分、クローンを作る(繰り返しで待たない--> yield無し)
