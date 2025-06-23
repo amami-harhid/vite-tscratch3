@@ -9,5 +9,5 @@ export const Constant = {
     Togemaru : "Togemaru",
     HarryPotter: "HarryPotter",
     Pew: 'Pew',
-    
+    MonitorPoint: 'MonitorPoint',
 }

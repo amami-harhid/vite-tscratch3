@@ -6,6 +6,7 @@ import {Pg, Lib} from "@tscratch3/tscratch3likejs/s3lib-importer";
 import type { IPgMain as PgMain } from '@Type/pgMain';
 import type { IStage as Stage } from '@Type/stage'
 import type { ISprite as Sprite } from '@Type/sprite';
+import type { IMonitors as Motnitors } from "@Type/monitors";
 
 import { Constant } from './sub/constants';
 import { Message } from './sub/message';
@@ -40,6 +41,7 @@ let textSprite: Sprite;
 let ball: Sprite;
 let bar: Sprite;
 let bottom: Sprite;
+let monitors: Motnitors;
 
 
 Pg.preload = async function( this: PgMain) {
@@ -104,12 +106,20 @@ Pg.prepare = async function prepare() {
     bottom.SvgText.add('Bottom', Bottom('#ff0000'));
     bottom.Motion.Position.xy = [0, -183]; //{x:0,y:-183};
 
-
+    //---------------------
+    // モニター
+    //---------------------
+    monitors = new Lib.Monitors();
+    monitors.add( Constant.MonitorPoint, '得点');
+    monitors.get( Constant.MonitorPoint).hide();
+    monitors.get( Constant.MonitorPoint).value = 0;
 }
 Pg.setting = async function setting() {
 
     // 緑の旗が押されたときの動作
     stage.Event.whenFlag(async function*( this: Stage ){
+        // モニター得点を初期化
+        monitors.get( Constant.MonitorPoint ).value = 0;
         // 背景を Black にする
         this.Looks.Backdrop.name = "Black";
         // ずっと繰り返し、終わるまで音を鳴らす（ClassicPiano)
@@ -164,6 +174,9 @@ Pg.setting = async function setting() {
             // １行分のクローンを作ったあと、Y座標を下方向にずらす
             this.Motion.Position.y -= 25;
         }
+        // モニターを表示
+        monitors.get( Constant.MonitorPoint).show();
+
     });
     
     // 緑の旗が押されたときの動作
@@ -178,6 +191,8 @@ Pg.setting = async function setting() {
         for(;;){
             // もしボールに触れたなら
             if(this.Sensing.isTouchingToSprites([ball])){
+                // 得点ＵＰ
+                monitors.get( Constant.MonitorPoint).value += 1;
                 // Pew の音を鳴らす
                 this.Sound.play(Constant.Pew);
                 // メッセージ(BallTouch)を送る
