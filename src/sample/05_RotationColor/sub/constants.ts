@@ -13,6 +13,8 @@ export const Constant = {
     Guide: 'Guide',
     GameOver: 'GameOver',
 
+    MonitorPoint: 'Point',
+
     BlackBground: 'BlackBground',
     Maze1: 'Maze1',
     Maze2: 'Maze2',

@@ -5,7 +5,7 @@ import {Pg, Lib} from "@tscratch3/tscratch3likejs/s3lib-importer";
 import type { IPgMain as PgMain } from '@Type/pgMain';
 import type { IStage as Stage } from '@Type/stage'
 import type { ISprite as Sprite } from '@Type/sprite';
-
+import type { IMonitors as Motnitors } from "@Type/monitors";
 
 import { Constant } from './sub/constants';
 import { Message } from "./sub/messages";
@@ -25,6 +25,8 @@ let controller: Sprite;
 let dot: Sprite;
 /** テキスト */
 let text: Sprite;
+/** モニター */
+let monitors: Motnitors;
 // ---------------------------------
 // 色
 // ---------------------------------
@@ -129,6 +131,12 @@ Pg.prepare = async function prepare() {
     text.Looks.show();
     // 幽霊の効果
     text.Looks.Effect.set( Lib.ImageEffective.GHOST, 0 );
+
+    monitors = new Lib.Monitors();
+    monitors.add( Constant.MonitorPoint, '点数');
+    monitors.get( Constant.MonitorPoint ).hide();
+    monitors.get(Constant.MonitorPoint).position = {x:-220, y:160};
+
 }
 
 // --------------------------------
@@ -137,6 +145,10 @@ Pg.prepare = async function prepare() {
 Pg.setting = async function setting() {
     // 緑の旗が押されたときの動作    
     stage.Event.whenFlag(async function*( this: Stage ){
+        // モニター値初期化
+        monitors.get(Constant.MonitorPoint).hide();
+        monitors.get(Constant.MonitorPoint).value = 20;
+        monitors.get(Constant.MonitorPoint).position = {x:-220, y:160};
         // 幽霊の効果
         this.Looks.Effect.set(Lib.ImageEffective.GHOST, 0);
         // 背景を指定
@@ -245,6 +257,7 @@ Pg.setting = async function setting() {
     });
     // メッセージ(Start)を受け取ったときの動作
     dot.Event.whenBroadcastReceived( Message.Start, async function*( this: Sprite ){
+        monitors.get(Constant.MonitorPoint).show();
         const CostumeNames = this.Looks.Costume.names;
         console.log('CostumeNames',CostumeNames);
         for(;;) {
@@ -299,9 +312,13 @@ Pg.setting = async function setting() {
                     this.Sound.play( Constant.Chanting );
                     // -- 点数を増やす( +2 )
                     point += 2;
+                    // モニター値
+                    monitors.get(Constant.MonitorPoint).value += 2;
                 }else{
                     this.Sound.play( Constant.Damage );
                     point -= 1;
+                    // モニター値
+                    monitors.get(Constant.MonitorPoint).value -= 1;
                 }
                 console.log('point=', point);
                 this.Looks.hide();
