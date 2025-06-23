@@ -42,11 +42,6 @@ import DamageMp3 from './assets/damage8bit.mp3';
 import TogemaruWoff from './assets/TogeMaruGothic-700-Bold.woff';
 import ShortMistery001Mp3 from './assets/Short_mistery_001.mp3';
 
-// ---------------------------------
-// その他変数
-// ---------------------------------
-let point = 0;
-
 // --------------------------------
 // 事前ロード処理
 // --------------------------------
@@ -117,6 +112,17 @@ Pg.prepare = async function prepare() {
         text.SvgText.add( Constant.Guide, textStr, fontFamily );    
     }
     {
+        const fontSize = 15;
+        const fontStyle = 'bold';
+        const color = '#ff0000';
+        const fontFamily = Constant.Togemaru;
+        const textArr = [
+            "失敗数が１０になったらゲームオーバー",
+        ];
+        const textStr = text.SvgText.toSvg(textArr, fontSize, fontStyle, color, fontFamily);
+        text.SvgText.add( Constant.Alert, textStr, fontFamily );    
+    }
+    {
         const fontSize = 35;
         const fontStyle = 'bold';
         const color = '#ff0000';
@@ -133,10 +139,10 @@ Pg.prepare = async function prepare() {
     text.Looks.Effect.set( Lib.ImageEffective.GHOST, 0 );
 
     monitors = new Lib.Monitors();
-    monitors.add( Constant.MonitorPoint, '点数');
+    monitors.add( Constant.MonitorPoint, '成功');
     monitors.get( Constant.MonitorPoint ).hide();
-    monitors.get(Constant.MonitorPoint).position = {x:-220, y:160};
-
+    monitors.add( Constant.MonitorFail, '失敗');
+    monitors.get( Constant.MonitorFail ).hide();
 }
 
 // --------------------------------
@@ -148,11 +154,10 @@ Pg.setting = async function setting() {
         // モニター値初期化
         monitors.get(Constant.MonitorPoint).hide();
         monitors.get(Constant.MonitorPoint).value = 20;
-        monitors.get(Constant.MonitorPoint).position = {x:-220, y:160};
+        monitors.get(Constant.MonitorFail).hide();
+        monitors.get(Constant.MonitorFail).value = 0;
         // 幽霊の効果
         this.Looks.Effect.set(Lib.ImageEffective.GHOST, 0);
-        // 背景を指定
-        //this.Looks.Backdrop.name = Constant.Maze1;
     });
 
     // メッセージ(Start)を受け取ったときの動作
@@ -181,21 +186,34 @@ Pg.setting = async function setting() {
     text.Event.whenFlag(async function*( this: Sprite ){
         // コスチュームを指定
         this.Looks.Costume.name = Constant.Title;
-        this.Looks.Effect.set( Lib.ImageEffective.GHOST, 0 );
         // 表示する
         this.Looks.show();
         await this.Control.wait(1);
         // コスチュームを指定
         this.Looks.Costume.name = Constant.Guide;
-        await this.Control.wait(2);
-
         let ghost = 0;
+        this.Looks.Effect.set( Lib.ImageEffective.GHOST, ghost );
+        await this.Control.wait(1);
+
         for(const _ of Lib.Iterator(5)) {
             ghost += 20;
             this.Looks.Effect.set( Lib.ImageEffective.GHOST, ghost );
             await this.Control.wait(0.1);
             yield;
         }
+
+        // コスチュームを指定
+        this.Looks.Costume.name = Constant.Alert;
+        ghost = 0;
+        this.Looks.Effect.set( Lib.ImageEffective.GHOST, ghost );
+        await this.Control.wait(1);
+        for(const _ of Lib.Iterator(5)) {
+            ghost += 20;
+            this.Looks.Effect.set( Lib.ImageEffective.GHOST, ghost );
+            await this.Control.wait(0.1);
+            yield;
+        }
+
         // メッセージ( Start )を送る
         this.Event.broadcast( Message.View );
         // 隠す
@@ -252,12 +270,12 @@ Pg.setting = async function setting() {
     });
     
     dot.Event.whenFlag( async function*( this:Sprite ){
-        point = 20;
         this.Looks.hide();
     });
     // メッセージ(Start)を受け取ったときの動作
     dot.Event.whenBroadcastReceived( Message.Start, async function*( this: Sprite ){
         monitors.get(Constant.MonitorPoint).show();
+        monitors.get(Constant.MonitorFail).show();
         const CostumeNames = this.Looks.Costume.names;
         console.log('CostumeNames',CostumeNames);
         for(;;) {
@@ -285,12 +303,12 @@ Pg.setting = async function setting() {
             this.Control.clone();
             // ランダムな時間だけ待つ
             await this.Control.wait( Lib.randomDecimal(0.2, 3));
-            if(point < 0) {
-                this.Event.broadcast(Message.GameOver);
-                break;
-            }
             yield;
         }
+    });
+    // メッセージ(GameOver)を受け取ったときの動作
+    dot.Event.whenBroadcastReceived( Message.GameOver, async function*( this: Sprite ){
+        this.Control.stopOtherScripts(this);
     });
     dot.Control.whenCloned( async function*( this:Sprite ){
         const costumeName = this.Looks.Costume.name; 
@@ -311,22 +329,20 @@ Pg.setting = async function setting() {
                     // -- 音を鳴らす
                     this.Sound.play( Constant.Chanting );
                     // -- 点数を増やす( +2 )
-                    point += 2;
-                    // モニター値
                     monitors.get(Constant.MonitorPoint).value += 2;
                 }else{
                     this.Sound.play( Constant.Damage );
-                    point -= 1;
-                    // モニター値
-                    monitors.get(Constant.MonitorPoint).value -= 1;
+                    // -- 失敗数を増やす( +1 )
+                    monitors.get(Constant.MonitorFail).value += 1;
                 }
-                console.log('point=', point);
                 this.Looks.hide();
                 break;
             }
-            if( point < 0) {
+            if( monitors.get(Constant.MonitorFail).value > 9) {
+                this.Looks.hide();
                 // 幽霊の効果
                 this.Looks.Effect.set( Lib.ImageEffective.GHOST, 100 );
+                this.Event.broadcast(Message.GameOver);
             }
             yield;
         }

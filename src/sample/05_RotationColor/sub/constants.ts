@@ -11,20 +11,12 @@ export const Constant = {
     Togemaru: "Togemaru",
     Title: 'Title',
     Guide: 'Guide',
+    Alert: 'Alert',
     GameOver: 'GameOver',
 
     MonitorPoint: 'Point',
+    MonitorFail: 'Fail',
 
     BlackBground: 'BlackBground',
-    Maze1: 'Maze1',
-    Maze2: 'Maze2',
-    Maze3: 'Maze3',
-    Frog: 'frog',
     ShortMistery001: 'ShortMistery001',
-    Black : 'Black',
-    Click: 'Click',
-    Judge: 'Judge',
-    OpenDoor: 'OpenDoor',
-    PikoPiko: 'PikoPiko',
-
 }
