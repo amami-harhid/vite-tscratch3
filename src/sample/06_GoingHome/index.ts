@@ -142,24 +142,28 @@ Pg.setting = async function setting() {
         // 表示する
         this.Looks.show();
         for(;;) {
+            let touching = false;
             this.Motion.Position.y -= 5;
             if( this.Sensing.isTouchingToColor('#000000')){
                 this.Motion.Position.y += 6;
+                touching = true;
                 this.Motion.Move.steps(10);
-                await this.Control.wait(0.1);
-                this.Looks.Costume.next();
             }
-            if( this.Sensing.isTouchingToColor('#0000ff')){
-                this.Motion.Position.y += 6;
-                this.Motion.Move.steps(5);
-                await this.Control.wait(0.1);
-                this.Looks.Costume.next();
+            while( this.Sensing.isTouchingToColor('#0000ff')){
+                this.Motion.Position.y += 5;
+                touching = true;
+                yield;
             }
             if( this.Sensing.isTouchingToColor('#ff0019')) {
                 break;
             }
             if( this.Sensing.isTouchingEdge()) {
                 break;
+            }
+            await this.Control.wait(0.1);
+            if(touching == true){
+                this.Motion.Move.steps(10);
+                this.Looks.Costume.next();
             }
             yield;
         }
@@ -168,7 +172,9 @@ Pg.setting = async function setting() {
     });
     pen.Event.whenFlag(async function*( this: Sprite ){
         this.Pen.prepare();
+        this.Pen.up();
         this.Pen.Size.thickness = 2;
+        await this.Control.wait(0.5);
         for(;;) {
             this.Motion.Move.mousePosition();
             if(this.Sensing.isMouseDown()) {
