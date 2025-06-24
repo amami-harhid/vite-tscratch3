@@ -23,6 +23,8 @@ let box2: Sprite;
 let house: Sprite;
 /** 犬 */
 let dog: Sprite;
+/** ペン */
+let pen: Sprite;
 
 // ---------------------------------
 // アセットをインポートする
@@ -81,6 +83,12 @@ Pg.prepare = async function prepare() {
     house.Image.add( Constant.House );
     house.Looks.hide();
 
+    //----------------
+    // スプライト（ペン）を作る
+    //----------------
+    pen = new Lib.Sprite('pen');
+    //pen.Image.add( Constant.DogA );
+    //pen.Looks.Effect.set( Lib.ImageEffective.GHOST, 50 );
 }
 
 // --------------------------------
@@ -124,7 +132,6 @@ Pg.setting = async function setting() {
         this.Looks.hide();
         for(;;) {
             const x = Lib.randomInteger(-220, -170);
-            console.log('x',x);
             this.Motion.Position.xy = [x, 170];
             await this.Control.wait( Lib.randomDecimal(1,3) );
             this.Control.clone();
@@ -137,10 +144,19 @@ Pg.setting = async function setting() {
         for(;;) {
             this.Motion.Position.y -= 5;
             if( this.Sensing.isTouchingToColor('#000000')){
-                this.Motion.Position.y += 5;
-                this.Motion.Move.steps(5);
-                await this.Control.wait(0.2);
+                this.Motion.Position.y += 6;
+                this.Motion.Move.steps(10);
+                await this.Control.wait(0.1);
                 this.Looks.Costume.next();
+            }
+            if( this.Sensing.isTouchingToColor('#0000ff')){
+                this.Motion.Position.y += 6;
+                this.Motion.Move.steps(5);
+                await this.Control.wait(0.1);
+                this.Looks.Costume.next();
+            }
+            if( this.Sensing.isTouchingToColor('#ff0019')) {
+                break;
             }
             if( this.Sensing.isTouchingEdge()) {
                 break;
@@ -149,7 +165,20 @@ Pg.setting = async function setting() {
         }
 
         this.Control.remove();
-
-    })
+    });
+    pen.Event.whenFlag(async function*( this: Sprite ){
+        this.Pen.prepare();
+        this.Pen.Size.thickness = 2;
+        for(;;) {
+            this.Motion.Move.mousePosition();
+            if(this.Sensing.isMouseDown()) {
+                this.Pen.down();
+    
+            }else{
+                this.Pen.up();
+            }
+            yield;
+        }
+    });
 
 }
