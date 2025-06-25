@@ -41,6 +41,7 @@ import ChantingMp3 from './assets/chanting8bit.mp3';
 import DamageMp3 from './assets/damage8bit.mp3';
 import TogemaruWoff from './assets/TogeMaruGothic-700-Bold.woff';
 import ShortMistery001Mp3 from './assets/Short_mistery_001.mp3';
+import type { TAddOption } from "@Type/svgText/ISvgText";
 
 // --------------------------------
 // 事前ロード処理
@@ -96,42 +97,59 @@ Pg.prepare = async function prepare() {
         const fontStyle = 'bold';
         const color = '#ffffff';
         const fontFamily = Constant.Togemaru;
-        const textStr = text.SvgText.toSvg(["カラー円盤ゲーム"], fontSize, fontStyle, color, fontFamily);
-        text.SvgText.add( Constant.Title, textStr, fontFamily );    
+        const option: TAddOption = {
+            fontFamily: fontFamily,
+            fontSize: fontSize,
+            fontStyle: fontStyle,
+            color: color,
+        };
+        text.SvgText.addTexts( Constant.Title, ["カラー円盤ゲーム"], option );    
     }
     {
         const fontSize = 15;
         const fontStyle = 'bold';
         const color = '#ff0000';
         const fontFamily = Constant.Togemaru;
+        const option: TAddOption = {
+            fontFamily: fontFamily,
+            fontSize: fontSize,
+            fontStyle: fontStyle,
+            color: color,
+        };
         const textArr = [
             "← / → を使って回転させよう",
             "迫ってくるドットを同じ色で受け止めよう"
         ];
-        const textStr = text.SvgText.toSvg(textArr, fontSize, fontStyle, color, fontFamily);
-        text.SvgText.add( Constant.Guide, textStr, fontFamily );    
+        text.SvgText.addTexts( Constant.Guide, textArr, option );    
     }
     {
         const fontSize = 15;
         const fontStyle = 'bold';
         const color = '#ff0000';
         const fontFamily = Constant.Togemaru;
+        const option: TAddOption = {
+            fontFamily: fontFamily,
+            fontSize: fontSize,
+            fontStyle: fontStyle,
+            color: color,
+        };
         const textArr = [
             "失敗数が１０になったらゲームオーバー",
         ];
-        const textStr = text.SvgText.toSvg(textArr, fontSize, fontStyle, color, fontFamily);
-        text.SvgText.add( Constant.Alert, textStr, fontFamily );    
+        text.SvgText.addTexts( Constant.Alert, textArr, option );    
     }
     {
         const fontSize = 35;
         const fontStyle = 'bold';
         const color = '#ff0000';
         const fontFamily = Constant.Togemaru;
-        const textArr = [
-            "GameOver"
-        ];
-        const textStr = text.SvgText.toSvg(textArr, fontSize, fontStyle, color, fontFamily);
-        text.SvgText.add( Constant.GameOver, textStr, fontFamily );    
+        const option: TAddOption = {
+            fontFamily: fontFamily,
+            fontSize: fontSize,
+            fontStyle: fontStyle,
+            color: color,
+        };
+        text.SvgText.addTexts( Constant.GameOver, ["GameOver"], option );    
     }
 
     text.Looks.show();

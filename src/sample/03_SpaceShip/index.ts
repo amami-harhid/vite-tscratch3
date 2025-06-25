@@ -37,6 +37,7 @@ import TogemaruWoff from './assets/TogeMaruGothic-700-Bold.woff';
 import HarryPotterWoff from './assets/HarryPotter-ov4z.woff';
 import ShotWav from './assets/shot.wav';
 import SpaceShipWhooshMp3 from './assets/spaceship-whoosh.mp3';
+import type { TAddOption } from "@tscratch3/tscratch3likejs/Type/svgText/ISvgText";
 
 // --------------------------------
 // 事前ロード処理
@@ -99,8 +100,13 @@ Pg.prepare = async function prepare() {
     const fontStyle = 'italic';
     const color = '#ffffff';
     const fontFamily = Constant.HarryPotter;
-    const text1 = textSprite.SvgText.toSvg(["Space ship game"], fontSize, fontStyle, color, fontFamily);
-    textSprite.SvgText.add("Text1", text1, fontFamily );
+    const option: TAddOption = {
+        fontFamily: fontFamily,
+        fontSize: fontSize,
+        fontStyle: fontStyle,
+        color: color,
+    }
+    textSprite.SvgText.addTexts("Text1", ["Space ship game"], option );
 
     //----------------
     // スプライト（底）を作る

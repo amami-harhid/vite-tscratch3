@@ -86,8 +86,6 @@ Pg.prepare = async function prepare() {
     ball = new Lib.Sprite('ball');
     ball.SvgText.add("Ball", Ball("#ff0000") );
     ball.Font.add(Constant.HarryPotter);
-    const X = ball.SvgText.toSvg(['X'], 20, "normal", "red", Constant.HarryPotter);
-    ball.SvgText.add("X", X, Constant.HarryPotter);
     ball.Motion.Position.xy = [0, -100];//{x:0,y:-100};
     ball.Looks.hide();
 

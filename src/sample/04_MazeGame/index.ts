@@ -5,6 +5,7 @@ import {Pg, Lib} from "@tscratch3/tscratch3likejs/s3lib-importer";
 import type { IPgMain as PgMain } from '@Type/pgMain';
 import type { IStage as Stage } from '@Type/stage'
 import type { ISprite as Sprite } from '@Type/sprite';
+import type { TAddOption } from "@Type/svgText/ISvgText";
 
 
 import { Constant } from './sub/constants';
@@ -85,8 +86,13 @@ Pg.prepare = async function prepare() {
     const fontStyle = 'bold';
     const color = '#000';
     const fontFamily = Constant.Togemaru;
-    const text1 = text.SvgText.toSvg(["迷路ゲーム"], fontSize, fontStyle, color, fontFamily);
-    text.SvgText.add( Constant.Title, text1, fontFamily );
+    const option:TAddOption = {
+        fontFamily: fontFamily,
+        fontSize: fontSize,
+        fontStyle: fontStyle,
+        color: color,
+    };
+    text.SvgText.addTexts( Constant.Title, ["迷路ゲーム"], option );
     // 幽霊の効果
     text.Looks.Effect.set( Lib.ImageEffective.GHOST, 50 );
 }
