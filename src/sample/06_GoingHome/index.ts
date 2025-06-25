@@ -150,7 +150,7 @@ Pg.setting = async function setting() {
                 this.Motion.Move.steps(10);
             }
             while( this.Sensing.isTouchingToColor('#0000ff')){
-                this.Motion.Position.y += 5;
+                this.Motion.Position.y += 6;
                 touching = true;
                 yield;
             }
