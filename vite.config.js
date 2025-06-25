@@ -7,7 +7,7 @@ import glob from 'glob'
 import topLevelAwait from 'vite-plugin-top-level-await';
 
 // ルートとするディレクトリー
-const root = resolve(__dirname, 'src')
+const root = resolve(__dirname, './src/')
 
 // ビルド対象のディレクトリーをすべて取得( src の下の index.htmlがあるディレクトリー)
 const entries = glob.sync('./src/**/index.html');
@@ -36,12 +36,13 @@ export default defineConfig({
         supported: {
             'top-level-await': true
         },
-        target: "esnext"
+        target: "esnext",
+
     },
     optimizeDeps:{
         esbuildOptions: {
             target: "esnext",
         }
     },
-    root,
+    root: resolve(__dirname, './'),
 })

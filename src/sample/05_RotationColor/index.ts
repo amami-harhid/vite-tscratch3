@@ -7,10 +7,14 @@ import type { IStage as Stage } from '@Type/stage'
 import type { ISprite as Sprite } from '@Type/sprite';
 import type { IMonitors as Motnitors } from "@Type/monitors";
 
+//---------------------------------
+// Sub Inport
+//---------------------------------
 import { Constant } from './sub/constants';
 import { Message } from "./sub/messages";
 import { Ball } from './sub/ball';
 import { BlackBackdrop } from "./sub/blackBacdrop";
+import { addTitle, addGuidance, addAlert, addGameOverSvg } from "./sub/svgText";
 
 Pg.title = "回転する色"
 
@@ -41,7 +45,6 @@ import ChantingMp3 from './assets/chanting8bit.mp3';
 import DamageMp3 from './assets/damage8bit.mp3';
 import TogemaruWoff from './assets/TogeMaruGothic-700-Bold.woff';
 import ShortMistery001Mp3 from './assets/Short_mistery_001.mp3';
-import type { TAddOption } from "@Type/svgText/ISvgText";
 
 // --------------------------------
 // 事前ロード処理
@@ -92,65 +95,14 @@ Pg.prepare = async function prepare() {
     text = new Lib.Sprite('text');
     // フォントを追加してSVG化した画像を追加する
     text.Font.add(Constant.Togemaru);
-    {
-        const fontSize = 35;
-        const fontStyle = 'bold';
-        const color = '#ffffff';
-        const fontFamily = Constant.Togemaru;
-        const option: TAddOption = {
-            fontFamily: fontFamily,
-            fontSize: fontSize,
-            fontStyle: fontStyle,
-            color: color,
-        };
-        text.SvgText.addTexts( Constant.Title, ["カラー円盤ゲーム"], option );    
-    }
-    {
-        const fontSize = 15;
-        const fontStyle = 'bold';
-        const color = '#ff0000';
-        const fontFamily = Constant.Togemaru;
-        const option: TAddOption = {
-            fontFamily: fontFamily,
-            fontSize: fontSize,
-            fontStyle: fontStyle,
-            color: color,
-        };
-        const textArr = [
-            "← / → を使って回転させよう",
-            "迫ってくるドットを同じ色で受け止めよう"
-        ];
-        text.SvgText.addTexts( Constant.Guide, textArr, option );    
-    }
-    {
-        const fontSize = 15;
-        const fontStyle = 'bold';
-        const color = '#ff0000';
-        const fontFamily = Constant.Togemaru;
-        const option: TAddOption = {
-            fontFamily: fontFamily,
-            fontSize: fontSize,
-            fontStyle: fontStyle,
-            color: color,
-        };
-        const textArr = [
-            "失敗数が１０になったらゲームオーバー",
-        ];
-        text.SvgText.addTexts( Constant.Alert, textArr, option );    
-    }
-    {
-        const fontSize = 35;
-        const fontStyle = 'bold';
-        const color = '#ff0000';
-        const fontFamily = Constant.Togemaru;
-        const option: TAddOption = {
-            fontFamily: fontFamily,
-            fontSize: fontSize,
-            fontStyle: fontStyle,
-            color: color,
-        };
-        text.SvgText.addTexts( Constant.GameOver, ["GameOver"], option );    
-    }
+    // タイトル
+    addTitle( text );
+    // ガイダンス
+    addGuidance( text );
+    // アラート（注意）
+    addAlert( text );
+    // GameOver
+    addGameOverSvg(text);
 
     text.Looks.show();
     // 幽霊の効果

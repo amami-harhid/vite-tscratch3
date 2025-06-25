@@ -10,12 +10,12 @@ import type { IMonitors as Motnitors } from "@Type/monitors";
 
 import { Constant } from './sub/constants';
 import { Message } from './sub/message';
-import { addSvg } from './sub/text';
 import { Block } from './sub/Block';
 import { Ball } from './sub/Ball';
 import { Bar } from './sub/Bar'
 import { Bottom } from './sub/Bottom';
 import { PositionRegist } from './sub/PositionRegist';
+import { addSvg } from "./sub/text";
 const positionRegist = PositionRegist.getInstance();
 
 // ---------------------------------

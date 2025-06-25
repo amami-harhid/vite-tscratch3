@@ -1,3 +1,4 @@
+import type { TAddOption } from "@tscratch3/tscratch3likejs/Type/svgText/ISvgText";
 import type { ISprite } from "@Type/sprite";
 
 const color = 'red';
@@ -11,7 +12,11 @@ const fontStyle = 'normal';
  * @param fontFamily 
  */
 export const addSvg = function(entity:ISprite, name:string, texts:string[], fontFamily:string): void {
-    // テキスト配列を
-    const svg = entity.SvgText.toSvg(texts, fontSize, fontStyle, color, fontFamily);
-    entity.SvgText.add(name, svg, fontFamily);
+    const option: TAddOption = {
+        fontFamily: fontFamily,
+        fontSize: fontSize,
+        fontStyle: fontStyle,
+        color: color,
+    }
+    entity.SvgText.addTexts(name, texts, option);
 }
