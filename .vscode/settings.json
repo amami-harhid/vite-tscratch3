@@ -8,4 +8,5 @@
     "typescript.enablePromptUseWorkspaceTsdk": false,
     "liveServer.settings.donotShowInfoMsg": true,
     "liveServer.settings.root": "/build",
+    "vite.base": "./src/sample/06_GoingHome/",
 }

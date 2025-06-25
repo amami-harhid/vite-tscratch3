@@ -5,12 +5,12 @@ import {Pg, Lib} from "@tscratch3/tscratch3likejs/s3lib-importer";
 import type {IPgMain as PgMain} from "@Type/pgMain";
 import type {ISprite as Sprite} from "@Type/sprite";
 import type {IStage as Stage} from "@Type/stage";
+import type { TAddOption } from "@Type/svgText/ISvgText";
 
 // ---------------------------------
 // Subをインポートする
 // ---------------------------------
 import { Constant } from './sub/constants';
-import { addSvg } from './sub/text';
 import { BlackBackdrop } from './sub/blackBacdrop';
 
 // ---------------------------------
@@ -50,8 +50,16 @@ Pg.prepare = async function prepare() {
     stage.SvgText.add( "Black", BlackBackdrop );
     textSprite = new Lib.Sprite('Introduction');
     textSprite.Font.add(Constant.Togemaru);
-    addSvg(textSprite, "0", ["Gathering cherry blossom petals"], Constant.Togemaru );
-    addSvg(textSprite, "1", ["Touch me to start."], Constant.Togemaru );
+    const texts01 = ["Petals are dancing in the wind"];
+    const texts02 = ["Touch me to start."];
+    const option: TAddOption = {
+        fontFamily: Constant.Togemaru,
+        fontSize: 25,
+        fontStyle: 'bold',
+        color: 'red'
+    }
+    textSprite.SvgText.addTexts("0", texts01, option);
+    textSprite.SvgText.addTexts("1", texts02, option);
     textSprite.Looks.hide();
 
     cherry = new Lib.Sprite('Cherry');
