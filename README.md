@@ -64,3 +64,15 @@ LiveServerは、buildディレクトリーをルートとして扱います。
 "eslint.problems.shortenToSingleLine": true,  // <-- 問題がある行のハイライトを１行にして見やすくする
 ```
 
+# fot subset 対応（試行)
+
+https://zenn.dev/cococig/articles/1d494847985263
+
+
+# Sample
+
+これを作りたい
+https://scratch.mit.edu/projects/1076651918/
+https://scratch.mit.edu/projects/415730046/
+https://scratch.mit.edu/projects/564648585/
+https://scratch.mit.edu/projects/743072130/
