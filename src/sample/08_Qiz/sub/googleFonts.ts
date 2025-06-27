@@ -5,36 +5,29 @@ export class GoogleFonts {
      */
     static get textsGuidance(): string[][] {
         return [
-            ['Tscratch3'],
-            ['(1) Pen機能を追加'],
-            ['(2) 文字を描画する機能を追加'],
-            ['Pen機能と文字描画を組み合わせて<br/>面白いビュジュアル効果が<br/>できました'],
-            ['平家物語の和文と英文を使って<br/>ご紹介しますね'],
-            ['３種類のGoogleFontを<br/>使いました'],
-            ['==FontFamily==<br/>(a)Stick<br/>(b)Yuji+Boku<br/>(c)Dancing+Script:wght@400..700'],
+            ['クイズゲーム（３択クイズ）'],
+            ['スペースキーで始まるよ'],
+
         ];
     }
     /**
      * 和文
      */
-    static get textsHeikeMonogatariJp(): string[][] {
+    static get textsQizJp(): string[][] {
         return [
-            ['祇園精舎の鐘の声<br/>諸行無常の響あり'],
-            ['沙羅双樹の花の色<br/>盛者必衰の理をあらはす'],
-            ['おごれる人も久しからず<br/>唯春の夜の夢のごとし'],
-            ['たけき者も遂にはほろびぬ<br/>偏に風の前の塵に同じ'],
-            ['祇<br/>園<br/>精<br/>舎<br/>の<br/>鐘<br/>の<br/>声'],
+            ['【クイズ０１】カバの汗の色は？<br/>1. 無色<br/>2. 黄色<br/>3. 赤色'],
+            ['【クイズ０２】サメの歯が生えかえる周期は？？<br/>1. １週間くらい<br/>2. １カ月くらい<br/>3. １年くらい'],
+            ['【クイズ０３】ウミガメが産卵の時に涙を流す理由は？<br/>1. 感動したから<br/>2. 目の乾燥を防ぐため<br/>3. 体内の塩分調整のため'],
         ];
     }
     /**
      * 英文
      */
-    static get textsHeikeMonogatariEn(): string[][] {
+    static get textsAnswserJp(): string[][] {
         return [
-            ['The sound of the bells of Gion Monastery<br/>tells us that nothing in the world stays the same'],
-            ['The colours of the blossoms of the Shorea tree<br/>signify that all that flourish must fade'],
-            ['The arrogance does not last long<br/>just like spring night’s dream'],
-            ['Even the mighty eventually falls<br/>all is like the dust before the wind']
+            ['正解は ３番<br/>カバの汗は最初は透明ですが<br/>すぐに酸化して赤色になります<br/>この赤い汗はカバの皮膚の<br/>日焼けや乾燥の防止、<br/>細菌感染を防ぐ効果があるそうです'],
+            ['正解は １番の１週間くらい<br/>10日で１列の歯が生えかえるので<br/>１生の間で２万本くらいは<br/>生え変わることになります'],
+            ['正解は ３番の塩分調整<br/>ウミガメは海水を飲むので<br/>血液中の塩分濃度が高くならないよう<br/>涙で塩分を外に出しています<br/>産卵とはあまり関係なかったです'],
         ];
     }
     /**
@@ -51,9 +44,10 @@ export class GoogleFonts {
                 const _str = str.replaceAll(/<br\/>/g,'').replaceAll(/\s/g,'');
                 const _strSplit = _str.split('');
                 // eslint-disable-next-line loopCheck/s3-loop-plugin
-                for(const _strOne of _strSplit){
+                for(const _strOne of _strSplit) {
                     if( _strOne != ' '){
                         if( !targets.includes(_strOne) ) {
+                            console.log(_strOne);
                             targets.push(_strOne);
                         }    
                     }    
@@ -68,7 +62,7 @@ export class GoogleFonts {
      * 和文FONT URL
      */
     static get fontFaceUrlJPGuidance( ) : string {
-        const fontFamily = "Stick";
+        const fontFamily = "UoqMunThenKhung";
         const fullTexts = GoogleFonts.textsGuidance;
         const target = GoogleFonts.textFilter(fullTexts);
         const url = `https://fonts.googleapis.com/css2?family=${fontFamily}&display=swap&text='+${encodeURIComponent(target)}`;
@@ -78,8 +72,8 @@ export class GoogleFonts {
      * 和文FONT URL
      */
     static get fontFaceUrlJP( ) : string {
-        const fontFamily = "Yuji+Boku";
-        const fullTexts = GoogleFonts.textsHeikeMonogatariJp;
+        const fontFamily = "UoqMunThenKhung";
+        const fullTexts = GoogleFonts.textsQizJp;
         const target = GoogleFonts.textFilter(fullTexts);
         const url = `https://fonts.googleapis.com/css2?family=${fontFamily}&display=swap&text='+${encodeURIComponent(target)}`;
         return url;
@@ -88,8 +82,8 @@ export class GoogleFonts {
      * 英文FONT URL
      */
     static get fontFaceUrlEN( ) : string {
-        const fontFamily = "Dancing+Script:wght@400..700";
-        const fullTexts = GoogleFonts.textsHeikeMonogatariEn;
+        const fontFamily = "UoqMunThenKhung";
+        const fullTexts = GoogleFonts.textsAnswserJp;
         const target = GoogleFonts.textFilter(fullTexts);
         const url = `https://fonts.googleapis.com/css2?family=${fontFamily}&display=swap&text='+${encodeURIComponent(target)}`;
         return url;

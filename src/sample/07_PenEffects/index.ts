@@ -26,9 +26,7 @@ Pg.preload = async function preload(this: PgMain) {
     this.Font.load(GoogleFonts.fontFaceUrlJPGuidance, Constant.GoogleFontsJPGuidance)
     this.Font.load(GoogleFonts.fontFaceUrlJP, Constant.GoogleFontsJP)
     this.Font.load(GoogleFonts.fontFaceUrlEN, Constant.GoogleFontsEN)
-    //this.Image.load(AssetHost+'/assets/Jurassic.svg', Jurassic );
     this.Sound.load('./assets/gionsyojya.wav', Gion);
-    //this.Image.load('/assets/Apple.svg', Apple);
 }
 Pg.prepare = async function prepare() {
 
