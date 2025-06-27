@@ -12,6 +12,7 @@ import type { TAddOption } from "@Type/svgText/ISvgText";
 // ---------------------------------
 import { Constant } from './sub/constants';
 import { BlackBackdrop } from './sub/blackBacdrop';
+import { GoogleFonts } from "./sub/googleFonts";
 
 // ---------------------------------
 // アセットをインポートする
@@ -30,6 +31,9 @@ let stage: Stage;
 let textSprite: Sprite;
 let cherry: Sprite;
 
+
+const fontFamily = "Reggae+One";
+const GoogleFontsUrl = GoogleFonts.fontFaceUrl(fontFamily);
 // --------------------------------
 // 事前ロード処理
 // --------------------------------
@@ -38,6 +42,7 @@ Pg.preload = async function preload(this:PgMain) {
     this.Image.load(CherryImg, Constant.Cherry);
     this.Sound.load(ClassicalPianoSound, Constant.ClassicPiano );
     this.Font.load(TogeMaruGothicFont, Constant.Togemaru);
+    this.Font.load(GoogleFontsUrl, Constant.GoogleFont);
 }
 // --------------------------------
 // 事前準備処理
@@ -49,11 +54,11 @@ Pg.prepare = async function prepare() {
     stage.Image.add( Constant.Forest );
     stage.SvgText.add( "Black", BlackBackdrop );
     textSprite = new Lib.Sprite('Introduction');
-    textSprite.Font.add(Constant.Togemaru);
-    const texts01 = ["Petals are dancing in the wind"];
-    const texts02 = ["Touch me to start."];
+    textSprite.Font.add(Constant.GoogleFont);
+    const texts01 = GoogleFonts.texts[0];
+    const texts02 = GoogleFonts.texts[1];
     const option: TAddOption = {
-        fontFamily: Constant.Togemaru,
+        fontFamily: Constant.GoogleFont,
         fontSize: 25,
         fontStyle: 'bold',
         color: 'red'

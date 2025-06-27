@@ -46,6 +46,7 @@ import DamageMp3 from './assets/damage8bit.mp3';
 import TogemaruWoff from './assets/TogeMaruGothic-700-Bold.woff';
 import ShortMistery001Mp3 from './assets/Short_mistery_001.mp3';
 
+
 // --------------------------------
 // 事前ロード処理
 // --------------------------------
@@ -55,6 +56,7 @@ Pg.preload = async function preload( this: PgMain ) {
     this.Sound.load( DamageMp3, Constant.Damage );
     this.Font.load( TogemaruWoff, Constant.Togemaru );
     this.Sound.load( ShortMistery001Mp3, Constant.ShortMistery001 );
+
 }
 
 // --------------------------------
