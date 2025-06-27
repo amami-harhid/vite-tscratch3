@@ -12,12 +12,13 @@ export class GoogleFonts {
     }
     /**
      * 和文
+     * https://hisasuke.com/animal-quiz/
      */
     static get textsQizJp(): string[][] {
         return [
-            ['【クイズ０１】カバの汗の色は？<br/>1. 無色<br/>2. 黄色<br/>3. 赤色'],
-            ['【クイズ０２】サメの歯が生えかえる周期は？？<br/>1. １週間くらい<br/>2. １カ月くらい<br/>3. １年くらい'],
-            ['【クイズ０３】ウミガメが産卵の時に涙を流す理由は？<br/>1. 感動したから<br/>2. 目の乾燥を防ぐため<br/>3. 体内の塩分調整のため'],
+            ['【クイズ０１】<br/>カバの汗の色は？<br/>1. 無色<br/>2. 黄色<br/>3. 赤色'],
+            ['【クイズ０２】<br/>サメの歯が生えかえる周期は？？<br/>1. １週間くらい<br/>2. １カ月くらい<br/>3. １年くらい'],
+            ['【クイズ０３】<br/>ウミガメが産卵の時に涙を流す理由は？<br/>1. 感動したから<br/>2. 目の乾燥を防ぐため<br/>3. 体内の塩分調整のため'],
         ];
     }
     /**
@@ -47,7 +48,6 @@ export class GoogleFonts {
                 for(const _strOne of _strSplit) {
                     if( _strOne != ' '){
                         if( !targets.includes(_strOne) ) {
-                            console.log(_strOne);
                             targets.push(_strOne);
                         }    
                     }    
@@ -55,7 +55,6 @@ export class GoogleFonts {
             }
         }
         const target = targets.sort().join("");
-        console.log(target);
         return target;
     }
     /**

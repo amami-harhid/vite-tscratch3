@@ -46,12 +46,13 @@ Pg.prepare = async function prepare() {
 
     text01 = new Lib.Sprite(Sprite);
     text01.Font.add(Constant.GoogleFontsJPGuidance);
-    text01.Motion.Position.xy = [0, 100];
+    text01.Motion.Position.xy = [0, 150];
+    text01.Looks.Size.scale = [100, 100];
     //text01.Looks.hide();
     // eslint-disable-next-line loopCheck/s3-loop-plugin
     for(const counter of Lib.Iterator(Texts.length)){
         const texts = Texts[counter];
-        const color = 'black';
+        const color = 'white';
         const fontSize = 25;
         const fontStyle = 'normal';
         const option = {
@@ -66,13 +67,13 @@ Pg.prepare = async function prepare() {
     text02 = new Lib.Sprite(Sprite);
     text02.Motion.Position.xy = [0, 50];
     text02.Font.add( Constant.GoogleFontsJP );
-    text02.Looks.Size.scale = [150,150];
+    text02.Looks.Size.scale = [100,100];
     //text02.Looks.hide();
 
     // eslint-disable-next-line loopCheck/s3-loop-plugin
     for(const counter of Lib.Iterator(Texts2.length)){
         const texts = Texts2[counter];
-        const color = 'red';
+        const color = 'white';
         const fontSize = 25;
         const fontStyle = 'normal';
         const option = {
@@ -86,14 +87,15 @@ Pg.prepare = async function prepare() {
 
     text03 = new Lib.Sprite(Sprite);
     text03.Font.add( Constant.GoogleFontsEN );    
-    text02.Motion.Position.xy = [0, 0];
-    //text03.Looks.hide();
+    text03.Motion.Position.xy = [0, 50];
+    text03.Looks.Size.scale = [80, 80];
+
     // eslint-disable-next-line loopCheck/s3-loop-plugin
     for(const counter of Lib.Iterator(Texts3.length)){
         const texts = Texts3[counter];
-        const color = 'blue';
-        const fontSize = 15;
-        const fontStyle = 'bold';
+        const color = 'white';
+        const fontSize = 25;
+        const fontStyle = 'normal';
         const option = {
             fontFamily: Constant.GoogleFontsEN,
             color: color,
@@ -109,6 +111,14 @@ Pg.setting = async function setting() {
     stage.Event.whenBroadcastReceived('Clear', async function*(this:Sprite){
 
     })
+    cat.Event.whenFlag( async function*(this:Sprite){
+        this.Looks.Costume.name = Constant.Cat01;
+        for(;;) {
+            await this.Control.wait(1);
+            this.Looks.Costume.next();
+            yield;
+        }
+    });
     cat.Event.whenFlag( async function*(this:Sprite){
         for(;;) {
             await this.Control.wait(1);
