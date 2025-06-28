@@ -99,13 +99,8 @@ Pg.prepare = async function prepare() {
     // eslint-disable-next-line loopCheck/s3-loop-plugin
     for(const counter of Lib.Iterator(Texts.length)){
         const texts = Texts[counter];
-        console.log(texts);
         guidanceText.SvgText.addTexts(`text01-${counter}`, texts,  option);
     }
-    console.log('001')
-    guidanceText.SvgText.addTexts(`text01-tokuten`, ["点"], option);
-    console.log('002')
-
 
     questionText = new Lib.Sprite(Sprite);
     questionText.Motion.Position.xy = [0, 50];
@@ -127,7 +122,6 @@ Pg.prepare = async function prepare() {
             fontSize: fontSize,
             fontStyle: fontStyle,
         }
-        console.log(texts);
         questionText.SvgText.addTexts(`text02-${counter}-${correctAnswer}`, texts, option);
     }
 
@@ -200,7 +194,7 @@ Pg.setting = async function setting() {
     // Message( INIT )を受け取ったときの動作
     // ----------------------------
     cat.Event.whenBroadcastReceived(Messages.INIT, async function(this:Sprite){
-        this.Looks.hide();
+        this.Looks.show();
     });
     // ----------------------------
     // Message( QIZ )を受け取ったときの動作
@@ -241,10 +235,13 @@ Pg.setting = async function setting() {
     // 旗を押されたときの動作
     // ----------------------------
     guidanceText.Event.whenFlag( async function(this:Sprite){
-        this.Looks.Costume.name = 'text01-0';
-        await this.Control.wait(0.5);
         this.Looks.hide();
+        this.Motion.Position.xy = [0, 80];
+        this.Looks.Size.scale = [100, 400];
         await this.Control.wait(0.5);
+        this.Looks.Costume.name = 'text01-0';
+        this.Looks.show();
+        await this.Control.wait(1);
         this.Motion.Position.xy = [0, 100];
         this.Looks.Size.scale = [100,100];
         this.Looks.Costume.name = 'text01-1';
@@ -271,7 +268,6 @@ Pg.setting = async function setting() {
     guidanceText.Event.whenBroadcastReceived(Messages.COMPLETE, async function(this:Sprite){
         this.Looks.Costume.name = 'text01-2';
         this.Looks.show();
-        const texts = [`正解数は${point}でした`];
         const color = 'white';
         const fontSize = 25;
         const fontStyle = 'bold';
@@ -282,11 +278,22 @@ Pg.setting = async function setting() {
             fontStyle: fontStyle,
         }
         await this.Control.wait(1);
-        this.SvgText.replaceTexts(`text01-tokuten`, texts,  option);
         // コスチュームを変更
-        this.Looks.Costume.name = 'text01-tokuten';
+        this.SvgText.replaceTexts(`text01-tokuten`, [`正解数は${point}でした`],  option);
+        this.Looks.Costume.name = 'text01-tokuten'; // 表示コスチューム名を変える
         await this.Control.wait(1);
-        this.SvgText.replaceTexts(`text01-tokuten`, ["お疲れさまでした"],  option);
+
+        // コスチュームを再度変更
+        if(point > 8 ) {
+            this.SvgText.replaceTexts(`text01-tokuten`, [`${point}点、よく出来ました`],  option);
+
+        }else if(point> 3){
+            this.SvgText.replaceTexts(`text01-tokuten`, [`${point}点、まあまあだね`],  option);
+
+        }else{
+            this.SvgText.replaceTexts(`text01-tokuten`, [`${point}点、もっと頑張ろう`],  option);
+
+        }
 
     });
 
@@ -298,7 +305,6 @@ Pg.setting = async function setting() {
         const name = names[quizeNo];
         this.Looks.Costume.name = name;
         const correctNo = name.replace(/text02-\d+-/,'');
-        //console.log('no',quizeNo,'name',name,'correctNo',correctNo);
         this.Motion.Position.xy = [0, 80];
         this.Looks.show();
         await this.Control.wait(0.5);
