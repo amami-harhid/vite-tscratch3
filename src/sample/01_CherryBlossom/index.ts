@@ -31,18 +31,21 @@ let stage: Stage;
 let textSprite: Sprite;
 let cherry: Sprite;
 
-
+//---------------------------------
+// GoogleFont を読み込むためのURL
+//---------------------------------
 const fontFamily = "Reggae+One";
 const GoogleFontsUrl = GoogleFonts.fontFaceUrl(fontFamily);
+
 // --------------------------------
 // 事前ロード処理
 // --------------------------------
 Pg.preload = async function preload(this:PgMain) {
-    this.Image.load(ForestImg, Constant.Forest );
-    this.Image.load(CherryImg, Constant.Cherry);
-    this.Sound.load(ClassicalPianoSound, Constant.ClassicPiano );
-    this.Font.load(TogeMaruGothicFont, Constant.Togemaru);
-    this.Font.load(GoogleFontsUrl, Constant.GoogleFont);
+    this.Image.load( ForestImg, Constant.Forest );
+    this.Image.load( CherryImg, Constant.Cherry );
+    this.Sound.load( ClassicalPianoSound, Constant.ClassicPiano );
+    this.Font.load( TogeMaruGothicFont, Constant.Togemaru );
+    this.Font.load( GoogleFontsUrl, Constant.GoogleFont );
 }
 // --------------------------------
 // 事前準備処理

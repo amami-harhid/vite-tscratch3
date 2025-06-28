@@ -1,7 +1,7 @@
 export const Messages = {
     QUESTION: 'QUESTION',
     INIT: 'INIT',
-    QUIZE: 'QUIZE',
+    QIZ: 'QUIZE',
     SEIKAI: 'SEIKAI',
     ZANNEN: 'ZANNEN',
     ANSWER: 'ANSWER',
