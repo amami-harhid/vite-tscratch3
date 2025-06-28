@@ -87,7 +87,6 @@ Pg.prepare = async function prepare() {
         const texts = Texts2[counter];
         const correctAnswer = texts[0];
         texts.shift(); // 先頭要素を削除
-        console.log('counter',counter,texts);
         const color = 'white';
         const fontSize = 20;
         const fontStyle = 'normal';
@@ -219,7 +218,7 @@ Pg.setting = async function setting() {
         const name = names[quizeNo];
         this.Looks.Costume.name = name;
         const correctNo = name.replace(/text02-\d+-/,'');
-        console.log('no',quizeNo,'name',name,'correctNo',correctNo);
+        //console.log('no',quizeNo,'name',name,'correctNo',correctNo);
         this.Motion.Position.xy = [0, 80];
         this.Looks.show();
         await this.Control.wait(0.5);
