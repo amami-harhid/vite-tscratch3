@@ -69,7 +69,7 @@ Pg.prepare = async function prepare() {
     //-----------------------------
     reference = new Lib.Sprite('reference');
     reference.Font.add( Constant.GoogleFontsJP );
-    reference.Motion.Position.xy = [180, -140];
+    reference.Motion.Position.xy = [180, -160];
     reference.Looks.Size.scale = [50, 50];
     {
         const color = 'white';
