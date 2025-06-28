@@ -28,7 +28,7 @@ const Sprite = "Sprite";
 let stage:Stage;
 let cat: Sprite;
 let guidanceText:Sprite, questionText:Sprite, answerText:Sprite;
-
+let reference: Sprite;
 
 // ---------------------------------
 // アセットをインポートする
@@ -65,6 +65,24 @@ Pg.prepare = async function prepare() {
     //-----------------------------
     stage = new Lib.Stage();
     stage.SvgText.add('BackDrop', backdrop);
+
+    //-----------------------------
+    reference = new Lib.Sprite('reference');
+    reference.Font.add( Constant.GoogleFontsJP );
+    reference.Motion.Position.xy = [180, -140];
+    reference.Looks.Size.scale = [50, 50];
+    {
+        const color = 'white';
+        const fontSize = 15;
+        const fontStyle = 'bold';
+        const option = {
+            fontFamily: Constant.GoogleFontsJPGuidance,
+            color: color,
+            fontSize: fontSize,
+            fontStyle: fontStyle,
+        }
+        reference.SvgText.addTexts('ref', ['小学生向けクイズ<br/>https://hisasuke.com/'], option);
+    }
 
     //-----------------------------
     // スプライト（ネコ）をつくる
@@ -284,14 +302,18 @@ Pg.setting = async function setting() {
         await this.Control.wait(1);
 
         // コスチュームを再度変更
-        if(point > 8 ) {
-            this.SvgText.replaceTexts(`text01-tokuten`, [`${point}点、よく出来ました`],  option);
+        const totalQuestions = questionText.Looks.Costume.names.length;
+        if( point ==  totalQuestions ) {
+            this.SvgText.replaceTexts(`text01-tokuten`, [`満点、素晴らしい！`],  option);
 
-        }else if(point> 3){
-            this.SvgText.replaceTexts(`text01-tokuten`, [`${point}点、まあまあだね`],  option);
+        } else if( point/totalQuestions > 0.7 ) {
+            this.SvgText.replaceTexts(`text01-tokuten`, [`${totalQuestions}問中、正解(${point})、よく出来ました`],  option);
 
-        }else{
-            this.SvgText.replaceTexts(`text01-tokuten`, [`${point}点、もっと頑張ろう`],  option);
+        } else if( point/totalQuestions > 0.3){
+            this.SvgText.replaceTexts(`text01-tokuten`, [`${totalQuestions}問中、正解(${point})、まあまあだね`],  option);
+
+        } else {
+            this.SvgText.replaceTexts(`text01-tokuten`, [`${totalQuestions}問中、正解(${point})、もっと頑張ろう`],  option);
 
         }
 

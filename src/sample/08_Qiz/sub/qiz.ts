@@ -6,7 +6,7 @@ export class Qiz {
     static get textsGuidance(): string[][] {
         return [
             ['クイズゲーム（３択クイズ）'],
-            ['スペースキーで始まるよ'],
+            ['スペースキーで進めてね'],
             ['クイズ終了！'],
         ];
     }
