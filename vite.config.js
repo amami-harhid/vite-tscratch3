@@ -5,6 +5,7 @@ import { resolve } from 'path'
 import { defineConfig } from 'vite'
 import glob from 'glob'
 import topLevelAwait from 'vite-plugin-top-level-await';
+import { viteStaticCopy } from 'vite-plugin-static-copy'
 
 // ルートとするディレクトリー
 const root = resolve(__dirname, './src/')
@@ -24,7 +25,6 @@ for(const target of targetDir){
 const outDir = resolve(__dirname, 'docs');
 
 export default defineConfig({
-    plugins: [topLevelAwait()],
     build: {
         target: "esnext",
         outDir, // ビルド結果を格納する先
@@ -45,4 +45,16 @@ export default defineConfig({
         }
     },
     root: resolve(__dirname, './'),
+    plugins: [
+        topLevelAwait(),
+        viteStaticCopy({
+            targets: [
+                {
+                    src: "./CNAME",
+                    dest: "./",
+                },
+            ],
+        }),
+    ],
+
 })

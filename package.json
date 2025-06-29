@@ -18,6 +18,7 @@
     "typescript": "~5.8.3",
     "typescript-eslint": "^8.34.1",
     "vite": "^6.3.5",
+    "vite-plugin-static-copy": "^3.1.0",
     "vite-plugin-top-level-await": "^1.5.0"
   }
 }
