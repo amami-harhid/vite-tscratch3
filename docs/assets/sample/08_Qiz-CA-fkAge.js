@@ -143,15 +143,15 @@ Promise.all([
         }
     }
     const L = "/assets/blackCat01-5DfUgPqk.svg", F = "/assets/blackCat02-BDtzF7Oy.svg", C = "/assets/blackCat03-BisdsYxq.svg", G = "/assets/den-JIQ9x_Nd.mp3", P = "/assets/OK-Jdg1c7Sk.mp3", A = "/assets/NG-BYQBgWQH.mp3", I = r.textsGuidance, N = r.textsQizJp, v = r.textsAnswserJp, x = "Sprite";
-    let S, a, u, d, f, E;
+    let E, a, u, d, f, S;
     w.preload = async function() {
         this.Image.load(L, t.QUESTION), this.Image.load(F, t.ZANNEN), this.Image.load(C, t.SEIKAI), this.Font.load(r.fontFaceUrlJPGuidance, t.GoogleFontsJPGuidance), this.Font.load(r.fontFaceUrlJP, t.GoogleFontsJP), this.Font.load(r.fontFaceUrlEN, t.GoogleFontsEN), this.Sound.load(G, t.DEN), this.Sound.load(P, t.OK), this.Sound.load(A, t.NG);
     };
     w.prepare = async function() {
-        S = new b.Stage, S.SvgText.add("BackDrop", T), E = new b.Sprite("reference"), E.Font.add(t.GoogleFontsJP), E.Motion.Position.xy = [
+        E = new b.Stage, E.SvgText.add("BackDrop", T), S = new b.Sprite("reference"), S.Font.add(t.GoogleFontsJP), S.Motion.Position.xy = [
             180,
             -160
-        ], E.Looks.Size.scale = [
+        ], S.Looks.Size.scale = [
             50,
             50
         ];
@@ -162,7 +162,7 @@ Promise.all([
                 fontSize: 15,
                 fontStyle: "bold"
             };
-            E.SvgText.addTexts("ref", [
+            S.SvgText.addTexts("ref", [
                 "小学生向けクイズ<br/>https://hisasuke.com/"
             ], g);
         }
@@ -225,9 +225,9 @@ Promise.all([
         }
     };
     w.setting = async function() {
-        const h = ()=>!!(S.Sensing.isKeyDown(b.Keyboard.SPACE) || S.Sensing.isMouseTouching() && S.Sensing.isMouseDown());
+        const h = ()=>!!(E.Sensing.isKeyDown(b.Keyboard.SPACE) || a.Sensing.isMouseDown() && a.Sensing.isMouseTouching());
         let s = 0;
-        S.Event.whenBroadcastReceived(o.QUESTION, async function(n, c, i) {
+        E.Event.whenBroadcastReceived(o.QUESTION, async function(n, c, i) {
             const e = await this.Sensing.askAndWait("番号を入れてね");
             e == "1" || e == "2" || e == "3" ? (this.Event.broadcast(o.ANSWER, n), e == c ? (s += 1, this.Event.broadcast(o.SEIKAI)) : this.Event.broadcast(o.ZANNEN), await this.Control.waitUntil(()=>h()), n + 1 > i.length - 1 ? (console.log("OWARI"), this.Event.broadcast(o.COMPLETE)) : this.Event.broadcast(o.QIZ, n + 1)) : this.Event.broadcast(o.QIZ, n);
         }), a.Event.whenFlag(async function() {
