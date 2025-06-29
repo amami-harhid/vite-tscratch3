@@ -51,7 +51,7 @@ export default defineConfig({
             targets: [
                 {
                     src: "./CNAME",
-                    dest: "./",
+                    dest: "./", // <--- outDir の下
                 },
             ],
         }),
