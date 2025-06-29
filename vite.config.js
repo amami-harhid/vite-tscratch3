@@ -21,7 +21,7 @@ for(const target of targetDir){
     rollupOpsionsInput[target] = resolve(root, target, 'index.html')
 }
 // ビルド結果を出力する先
-const outDir = resolve(__dirname, 'dist');
+const outDir = resolve(__dirname, 'docs');
 
 export default defineConfig({
     plugins: [topLevelAwait()],
