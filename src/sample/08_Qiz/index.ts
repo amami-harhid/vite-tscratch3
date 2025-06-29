@@ -175,7 +175,7 @@ Pg.setting = async function setting() {
         if(stage.Sensing.isKeyDown(Lib.Keyboard.SPACE)){
             return true;
         }
-        if(cat.Sensing.isMouseDown() && cat.Sensing.isMouseTouching()){
+        if(stage.Sensing.isMouseDown() ){
             return true;
         }
         return false;

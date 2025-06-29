@@ -225,7 +225,7 @@ Promise.all([
         }
     };
     w.setting = async function() {
-        const h = ()=>!!(E.Sensing.isKeyDown(b.Keyboard.SPACE) || a.Sensing.isMouseDown() && a.Sensing.isMouseTouching());
+        const h = ()=>!!(E.Sensing.isKeyDown(b.Keyboard.SPACE) || E.Sensing.isMouseDown());
         let s = 0;
         E.Event.whenBroadcastReceived(o.QUESTION, async function(n, c, i) {
             const e = await this.Sensing.askAndWait("番号を入れてね");
