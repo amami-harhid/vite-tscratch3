@@ -170,6 +170,16 @@ Pg.prepare = async function prepare() {
 // --------------------------------
 Pg.setting = async function setting() {
 
+    // スペースキーが押されるまで,またはステージタップされるまで待つ
+    const ReleaseStoper = () => {
+        if(stage.Sensing.isKeyDown(Lib.Keyboard.SPACE)){
+            return true;
+        }
+        if(stage.Sensing.isMouseTouching() && stage.Sensing.isMouseDown()){
+            return true;
+        }
+        return false;
+    }
     let point = 0;
     // ----------------------------
     // Message( QUESTION )を受け取ったときの動作
@@ -185,7 +195,7 @@ Pg.setting = async function setting() {
                 this.Event.broadcast(Messages.ZANNEN);
             }
             // スペースキーが押されるまで待つ
-            await this.Control.waitUntil(()=>this.Sensing.isKeyDown(Lib.Keyboard.SPACE));
+            await this.Control.waitUntil(()=>ReleaseStoper());
 
             if( quizeNo+1 > names.length-1) {
                 console.log('OWARI');
@@ -248,7 +258,6 @@ Pg.setting = async function setting() {
             this.Looks.Costume.name = Constant.ZANNEN;
         }
     });
-
     // ----------------------------
     // 旗を押されたときの動作
     // ----------------------------
@@ -264,8 +273,7 @@ Pg.setting = async function setting() {
         this.Looks.Size.scale = [100,100];
         this.Looks.Costume.name = 'text01-1';
         this.Looks.show();
-        // スペースキーが押されるまで待つ
-        await this.Control.waitUntil(()=>this.Sensing.isKeyDown(Lib.Keyboard.SPACE));
+        await this.Control.waitUntil(()=>ReleaseStoper());
         this.Event.broadcast(Messages.QIZ, 0 );
     });
     // ----------------------------
