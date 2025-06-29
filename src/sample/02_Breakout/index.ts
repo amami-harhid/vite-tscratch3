@@ -78,6 +78,7 @@ Pg.prepare = async function prepare() {
     textSprite.Font.add(Constant.Togemaru);
     addSvg(textSprite, "T0", ["ブロック崩し"], Constant.Togemaru );
     addSvg(textSprite, "T1", ["Touch me to start."], Constant.Togemaru );
+    addSvg(textSprite, "T2", ["The paddle moves with the mouse. "], Constant.Togemaru );
     textSprite.Looks.hide();
 
     // --------------------
@@ -209,8 +210,9 @@ Pg.setting = async function setting() {
 
     // 緑の旗が押されたときの動作
     textSprite.Event.whenFlag(async function*( this: Sprite ){
-        // コスチュームを "T1" にする
-        this.Looks.Costume.name = "T1";
+        const names = this.Looks.Costume.names;
+        // コスチュームを １番目にする
+        this.Looks.Costume.name = names[0];
         // 表示する
         this.Looks.show();
         // メッセージ（IntroStart）を送る
@@ -231,6 +233,8 @@ Pg.setting = async function setting() {
         for(;;){
             // マウスに触れたとき
             if(this.Sensing.isMouseTouching()){
+                // このスプライトの他のスクリプトを止める。
+                this.Control.stopOtherScripts(this);
                 // メッセージ（ Question )を送る
                 this.Event.broadcast( Message.Question );
                 // 隠す
@@ -240,6 +244,18 @@ Pg.setting = async function setting() {
             yield;
         }
     });
+    // メッセージ（IntroStartNext)を受け取ったときの動作
+    textSprite.Event.whenBroadcastReceived( Message.IntroStartNext, async function( this: Sprite, barSize: number ){
+        console.log('Recieved IntroStartNext');
+        const names = this.Looks.Costume.names;
+        this.Looks.Costume.name = names[ names.length -1 ];
+        // 幽霊の効果を 0% にする
+        this.Looks.Effect.set(Lib.ImageEffective.GHOST, 0);
+        this.Looks.show();
+        await this.Control.wait(2);
+        this.Looks.hide();
+        this.Event.broadcast( Message.Start, barSize ); // barSize は受け取ったものをそのまま渡す
+    });
 
     // メッセージ（Question)を受け取ったときの動作
     stage.Event.whenBroadcastReceived( Message.Question, async function*( this: Stage ){
@@ -248,20 +264,21 @@ Pg.setting = async function setting() {
         // ずっと繰り返す（ 質問の答えが 1,2,3 のとき、繰り返しを抜ける）
         for(;;) {
             // 質問をして待つ
-            const level = await this.Sensing.askAndWait('PLAY MODE( 1:EASY, 2:NORMAL, 3:HARD )');
+            const level = await this.Sensing.askAndWait('PLAY MODE( 1:SUPER EASY, 2:NORMAL, 3:HARD )');
             // 答えが 1, 2, 3 のとき、バーサイズを設定して、繰り返しを抜ける
             if(level == '1' || level == '2' || level == '3'){
                 const _level:number = parseInt(level); // 文字を整数に変換する
                 if(_level == 1) barSize = 3;
                 if(_level == 2) barSize = 2;
                 if(_level == 3) barSize = 1;
+
                 // 繰り返しを抜ける
                 break;
             }
             yield;
         }
         // メッセージ( Start )を送る、バーサイズをパラメータとして一緒に送る
-        this.Event.broadcast( Message.Start, barSize );
+        this.Event.broadcast( Message.IntroStartNext, barSize );
     });
 
     // メッセージ（IntroStart)を受け取ったときの動作
