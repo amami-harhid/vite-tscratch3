@@ -1,0 +1,4 @@
+[submodule "dist"]
+	path = dist
+	url = https://github.com/amami-harhid/vite-tscratch3.git
+	branch = gh-pages
