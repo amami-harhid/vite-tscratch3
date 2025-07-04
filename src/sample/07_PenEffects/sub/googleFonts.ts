@@ -6,10 +6,10 @@ export class GoogleFonts {
     static get textsGuidance(): string[][] {
         return [
             ['Tscratch3'],
-            ['(1) Pen機能を追加'],
-            ['(2) 文字を描画する機能を追加'],
-            ['Pen機能と文字描画を組み合わせて<br/>面白いビュジュアル効果が<br/>できました'],
-            ['平家物語の和文と英文を使って<br/>ご紹介しますね'],
+            ['文字のスプライトを'],
+            ['PEN機能でスタンプします'],
+            ['面白いビュジュアル効果が<br/>できました'],
+            ['平家物語の和文と英文を使って<br/>ご紹介！'],
             ['３種類のGoogleFontを<br/>使いました'],
             ['==FontFamily==<br/>(a)Stick<br/>(b)Yuji+Boku<br/>(c)Dancing+Script:wght@400..700'],
         ];

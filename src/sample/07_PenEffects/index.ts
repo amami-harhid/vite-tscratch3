@@ -92,6 +92,24 @@ Pg.prepare = async function prepare() {
 
 }
 Pg.setting = async function setting() {
+
+    // 緑の旗が押されたときの動作の定義
+    stage.Event.whenFlag(async function*(this:Sprite){
+        this.Event.broadcast( 'Clear' );
+    });
+    stage.Event.whenBroadcastReceived( 'Start', async function*(this:Sprite){
+        this.Looks.Effect.set(Lib.ImageEffective.GHOST, 95);
+        this.Pen.clear();
+        for(;;){
+            await this.Sound.playUntilDone(Gion);
+            yield;
+        }
+    })
+    stage.Event.whenBroadcastReceived( 'Clear', async function*(this:Sprite){
+        this.Pen.clear();
+    })
+
+    // 緑の旗が押されたときの動作の定義
     text01.Event.whenFlag(async function*(this:Sprite){
         this.Looks.show();
         const names = this.Looks.Costume.names;
@@ -102,19 +120,13 @@ Pg.setting = async function setting() {
         }
         this.Looks.hide();
         await this.Control.wait(1);
-        this.Event.broadcast('Start');
+        this.Event.broadcast( 'Start' );
     });
-    stage.Event.whenBroadcastReceived('Start', async function*(this:Sprite){
-        this.Looks.Effect.set(Lib.ImageEffective.GHOST, 95);
-        this.Pen.clear();
-        for(;;){
-            await this.Sound.playUntilDone(Gion);
-            yield;
-        }
-    })
-    stage.Event.whenBroadcastReceived('Clear', async function*(this:Sprite){
-        this.Pen.clear();
-    })
+
+    // 緑の旗が押されたときの動作の定義
+    text02.Event.whenFlag(async function*(this:Sprite){
+        this.Looks.hide();
+    });
     text02.Event.whenBroadcastReceived('Start', async function*(this:Sprite){
         this.Looks.Size.scale = {w:200, h:200};
         this.Looks.show();

@@ -1,10 +1,11 @@
 /**
  * 【03】SpaceShip
  */
-import {Pg, Lib} from "@tscratch3/tscratch3likejs/s3lib-importer";
+import { Pg, Lib } from "@tscratch3/tscratch3likejs/s3lib-importer";
 import type { IPgMain as PgMain } from '@Type/pgMain';
 import type { IStage as Stage } from '@Type/stage'
 import type { ISprite as Sprite } from '@Type/sprite';
+import type { TAddOption } from "@Type/svgText/ISvgText";
 
 import { Constant } from './sub/constants';
 import { Ball } from './sub/Ball';
@@ -33,11 +34,9 @@ import ExplosionWav from './assets/explosion.wav';
 import AsteroidSvg from './assets/universe_asteroid.svg';
 import SpaceShip01Svg from './assets/spaceShip1.svg';
 import SpaceShip02Svg from './assets/spaceShip2.svg';
-import TogemaruWoff from './assets/TogeMaruGothic-700-Bold.woff';
 import HarryPotterWoff from './assets/HarryPotter-ov4z.woff';
 import ShotWav from './assets/shot.wav';
 import SpaceShipWhooshMp3 from './assets/spaceship-whoosh.mp3';
-import type { TAddOption } from "@tscratch3/tscratch3likejs/Type/svgText/ISvgText";
 
 // --------------------------------
 // 事前ロード処理
@@ -51,8 +50,6 @@ Pg.preload = async function preload( this: PgMain) {
     this.Image.load( AsteroidSvg, Constant.Asteroid);
     this.Image.load( SpaceShip01Svg, Constant.Spaceship01 );
     this.Image.load( SpaceShip02Svg, Constant.Spaceship02 );
-
-    this.Font.load( TogemaruWoff, Constant.Togemaru);
     this.Font.load( HarryPotterWoff, Constant.HarryPotter);
 
     this.Sound.load( ExplosionWav, Constant.Explosion);

@@ -13,14 +13,15 @@ import type { TAddOption } from "@Type/svgText/ISvgText";
 import { Constant } from './sub/constants';
 import { BlackBackdrop } from './sub/blackBacdrop';
 import { GoogleFonts } from "./sub/googleFonts";
+import { Message } from "./sub/messages";
 
 // ---------------------------------
 // アセットをインポートする
 // ---------------------------------
-import ForestImg from './assets/Forest.png';
+import ForestImg from './assets/Forest.png'; // Scratch3内の背景素材より
 import CherryImg from './assets/Cherry.svg';
-import ClassicalPianoSound from './assets/ClassicalPiano.wav';
-import TogeMaruGothicFont from './assets/TogeMaruGothic-700-Bold.woff';
+import ClassicalPianoSound from './assets/bach_syuyo_spiano.wav';// 「音楽の卵」様提供フリー素材より
+import TogeMaruGothicFont from './assets/TogeMaruGothic-700-Bold.woff'; // 
 
 Pg.title = "【01_CherryBlossom】桜の花びらが舞う"
 
@@ -80,16 +81,20 @@ Pg.prepare = async function prepare() {
 // --------------------------------
 Pg.setting = async function setting() {
 
+    // 【ステージ】緑の旗が押されたときの動作の定義
     stage.Event.whenFlag(async function*(this:Stage){
         this.Looks.Backdrop.name = "Black";
-        this.Looks.Effect.set(Lib.ImageEffective.GHOST, 95);
+        // 花びらスタンプの跡を残すために透明度を高めておく
+        this.Looks.Effect.set(Lib.ImageEffective.GHOST, 99);
         this.Sound.add(Constant.ClassicPiano);
         for(;;){
+            this.Event.broadcast(Message.SOUND_START); // しばらくしたら再生を止める
             await this.Sound.playUntilDone(Constant.ClassicPiano);
             yield;
         }
     });
 
+    // 【テキスト】緑の旗が押されたときの動作の定義
     textSprite.Event.whenFlag(async function*(this:Sprite){
         this.Looks.Costume.name = "0";
         this.Looks.show();
@@ -102,6 +107,7 @@ Pg.setting = async function setting() {
         }
     });
 
+    // 【テキスト】メッセージ（IntroStart)を受け取ったときの動作の定義
     textSprite.Event.whenBroadcastReceived('IntroStart', async function*(this:Sprite){
         for(;;){
             if(this.Sensing.isMouseTouching()){
@@ -114,6 +120,7 @@ Pg.setting = async function setting() {
         }
     });
 
+    // 【テキスト】メッセージ（IntroStart)を受け取ったときの動作の定義
     textSprite.Event.whenBroadcastReceived('IntroStart', async function*(this:Sprite){
         for(;;){
             await this.Control.wait(0.5);
@@ -123,6 +130,8 @@ Pg.setting = async function setting() {
             yield;
         }
     });
+
+    // 【花びら】緑の旗が押されたときの動作の定義
     cherry.Event.whenFlag(async function(this:Sprite){
         this.Pen.prepare();
         this.Looks.hide();
@@ -130,39 +139,51 @@ Pg.setting = async function setting() {
         this.Looks.Effect.clear();
         this.Motion.Rotation.style = Lib.RotationStyle.ALL_AROUND;
     });
+
+    // 【花びら】メッセージ（CherryStart）を受け取ったときの動作の定義
     cherry.Event.whenBroadcastReceived('CherryStart', async function*(this:Sprite){
         // どこかの場所に移動してクローンを作りつづける。
         for(;;){
             this.Motion.Move.randomPosition();
-            this.Motion.Position.y = Lib.getRandomValueInRange(100,180);
-            const size = Lib.getRandomValueInRange(10,50);
+            this.Motion.Position.y = Lib.randomInteger(100,180);
+            const size = Lib.randomInteger(10,50);
             this.Looks.Size.scale = {w:size,h:size};
+            // 本体の色の効果をランダムに変える（クローンに引き継がせる）
+            this.Looks.Effect.set(Lib.ImageEffective.COLOR,Lib.randomInteger(0,240))
             this.Control.clone();
             await this.Control.wait(0.05);
             yield;
         }
     });
 
+    // 【花びら】クローンされたときの動作の定義
     cherry.Control.whenCloned(async function*(this:Sprite){
+        // 表示する（本体は非表示のまま）
         this.Looks.show();
-        // BUG: CloneがEffectを継承しない
-        this.Looks.Effect.set(Lib.ImageEffective.COLOR,Lib.getRandomValueInRange(0,240))
-        const size = this.Looks.Size.w;
-        this.Looks.Effect.set(Lib.ImageEffective.GHOST, 100 - size/50*100);
-        const degree = Lib.getRandomValueInRange(-15,15);
+        // 回転する角度をランダムに決める( -15～15 )（クローンに引き継がせる）
+        const degree = Lib.randomInteger(-15,15);
+        // ずっと繰り返す
         for(;;) {
+            // 落ちる速度の率：Y座標に応じて変える( 落ちていくほど速くする )
             const ySpeed = (180 - this.Motion.Position.y + 20)/360;
-            this.Motion.Position.y -= Lib.getRandomValueInRange(5,10) * ySpeed;
-            this.Motion.Position.x += Lib.getRandomValueInRange(-2,2);
+            // 落ちる速度は ランダムに変わる。でも落ちるほど速くする
+            this.Motion.Position.y -= Lib.randomInteger(5,10) * ySpeed;
+            // 横方向にフラフラさせる
+            this.Motion.Position.x += Lib.randomInteger(-2,2);
+            // 回転させる
             this.Motion.Direction.degree += degree;
+            // 背景部をスタンプする
             this.Pen.stampStage();
+            // 背景スタンプの上に 花びらをスタンプする
             this.Pen.stamp();
-
+            // Y座標が -170より小さいとき（ 十分に下に落ちたとき ）
             if(this.Motion.Position.y < -170){
+                // 繰り返しを抜ける
                 break;
             }
             yield;
         }
+        // このクローンを削除する
         this.Control.remove();
     });
 }

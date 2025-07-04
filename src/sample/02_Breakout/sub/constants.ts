@@ -4,7 +4,7 @@
 export const Constant = {
     StartText : "StartText",
     Forest : "Forest",
-    ClassicPiano : "ClassicPiano",
+    BGM : "ClassicPiano",
     Cherry : "Cherry",
     Togemaru : "Togemaru",
     HarryPotter: "HarryPotter",

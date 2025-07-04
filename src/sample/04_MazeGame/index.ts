@@ -31,7 +31,6 @@ import Maze03Svg from './assets/maze3.svg';
 import FrogSvg from './assets/frog.svg';
 import TogemaruWoff from './assets/TogeMaruGothic-700-Bold.woff';
 import ShortMistery001Mp3 from './assets/Short_mistery_001.mp3';
-//import ClickMp3 from './assets/click.mp3';
 import JudgeMp3 from './assets/judge.mp3';
 import OpenDoorMp3 from './assets/open_door.mp3';
 import PikoPikoMp3 from './assets/pikopiko.mp3';

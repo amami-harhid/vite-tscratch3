@@ -22,10 +22,9 @@ const positionRegist = PositionRegist.getInstance();
 // アセットをインポートする
 // ---------------------------------
 import ForestImg from './assets/Forest.png';
-import ClassicPianoWav from './assets/ClassicalPiano.wav';
+import BGM from './assets/Whisker_Stalker.wav';
 import PewWav from './assets/Pew.wav';
 import TogemaruWoff from './assets/TogeMaruGothic-700-Bold.woff';
-import HarryPotterWoff from './assets/HarryPotter-ov4z.woff';
 
 // ---------------------------------
 // タイトルを設定する
@@ -46,10 +45,9 @@ let monitors: Motnitors;
 
 Pg.preload = async function( this: PgMain) {
     this.Image.load( ForestImg, Constant.Forest );
-    this.Sound.load( ClassicPianoWav, Constant.ClassicPiano );
+    this.Sound.load( BGM, Constant.BGM );
     this.Sound.load( PewWav, Constant.Pew );
     this.Font.load( TogemaruWoff, Constant.Togemaru);
-    this.Font.load( HarryPotterWoff, Constant.HarryPotter);
 }
 Pg.prepare = async function prepare() {
     // --------------------
@@ -58,7 +56,7 @@ Pg.prepare = async function prepare() {
     stage = new Lib.Stage();
     // ステージに背景を追加
     stage.Image.add( Constant.Forest );
-    stage.Sound.add(Constant.ClassicPiano);
+    stage.Sound.add(Constant.BGM);
     stage.Sound.setOption(Lib.SoundOption.VOLUME, 10);
     
     // --------------------
@@ -86,7 +84,6 @@ Pg.prepare = async function prepare() {
     // --------------------
     ball = new Lib.Sprite('ball');
     ball.SvgText.add("Ball", Ball("#ff0000") );
-    ball.Font.add(Constant.HarryPotter);
     ball.Motion.Position.xy = [0, -100];//{x:0,y:-100};
     ball.Looks.hide();
 
@@ -122,15 +119,15 @@ Pg.setting = async function setting() {
         monitors.get( Constant.MonitorPoint ).value = 0;
         // 背景を Black にする
         this.Looks.Backdrop.name = "Black";
-        // ずっと繰り返し、終わるまで音を鳴らす（ClassicPiano)
-        let volume = 5;
+        // ずっと繰り返し、終わるまで音を鳴らす（BGM)
+        let volume = 50;
         // 音の大きさを設定
         stage.Sound.setOption(Lib.SoundOption.VOLUME, volume);
         for(;;){
             // 音の大きさを設定
             stage.Sound.setOption(Lib.SoundOption.VOLUME, volume);
             // 終わるまで音を鳴らす
-            await stage.Sound.playUntilDone(Constant.ClassicPiano);
+            await stage.Sound.playUntilDone(Constant.BGM);
             // 音が100より小さいときに音をだんだん大きくする
             if(volume < 100){
                 // 音を大きくする
