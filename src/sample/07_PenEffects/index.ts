@@ -6,6 +6,8 @@ import type { IPgMain as PgMain } from '@Type/pgMain';
 import type { IStage as Stage } from '@Type/stage'
 import type { ISprite as Sprite } from '@Type/sprite';
 
+Pg.title = "平家物語の文字スタンプと画像効果"
+
 //---------------------------------
 // Sub Import
 //---------------------------------

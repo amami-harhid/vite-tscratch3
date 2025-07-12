@@ -1,4 +1,4 @@
-import { _ as y, a as e, __tla as __tla_0 } from "../index-BI-1cn8T.js";
+import { _ as g, a as e, __tla as __tla_0 } from "../index-BI-1cn8T.js";
 Promise.all([
     (()=>{
         try {
@@ -80,7 +80,7 @@ Promise.all([
             const o = [];
             for (const r of t)for (const d of r){
                 const x = d.replaceAll(/<br\/>/g, "").replaceAll(/\s/g, "").split("");
-                for (const g of x)g != " " && (o.includes(g) || o.push(g));
+                for (const u of x)u != " " && (o.includes(u) || o.push(u));
             }
             const n = o.sort().join("");
             return console.log(n), n;
@@ -98,14 +98,16 @@ Promise.all([
             return `https://fonts.googleapis.com/css2?family=${t}&display=swap&text='+${encodeURIComponent(n)}`;
         }
     }
-    const b = "/assets/gionsyojya-a8CXI2F4.wav", u = "Sprite", p = "Gion";
+    const b = "/assets/gionsyojya-a8CXI2F4.wav";
+    g.title = "平家物語の文字スタンプと画像効果";
+    const y = "Sprite", p = "Gion";
     let l, h, a, f;
     const S = s.textsGuidance, m = s.textsHeikeMonogatariJp, k = s.textsHeikeMonogatariEn;
-    y.preload = async function() {
+    g.preload = async function() {
         this.Font.load(s.fontFaceUrlJPGuidance, i.GoogleFontsJPGuidance), this.Font.load(s.fontFaceUrlJP, i.GoogleFontsJP), this.Font.load(s.fontFaceUrlEN, i.GoogleFontsEN), this.Sound.load(b, p);
     };
-    y.prepare = async function() {
-        l = new e.Stage, l.Sound.add(p), l.SvgText.add("BackDrop", F), h = new e.Sprite(u), h.Font.add(i.GoogleFontsJPGuidance), h.Looks.hide();
+    g.prepare = async function() {
+        l = new e.Stage, l.Sound.add(p), l.SvgText.add("BackDrop", F), h = new e.Sprite(y), h.Font.add(i.GoogleFontsJPGuidance), h.Looks.hide();
         for (const t of e.Iterator(S.length)){
             const o = S[t], c = {
                 fontFamily: i.GoogleFontsJPGuidance,
@@ -115,7 +117,7 @@ Promise.all([
             };
             h.SvgText.addTexts(`cat-${t}`, o, c);
         }
-        a = new e.Sprite(u), a.Motion.Position.xy = {}, a.Font.add(i.GoogleFontsJP), a.Looks.hide();
+        a = new e.Sprite(y), a.Motion.Position.xy = {}, a.Font.add(i.GoogleFontsJP), a.Looks.hide();
         for (const t of e.Iterator(m.length)){
             const o = m[t], c = {
                 fontFamily: i.GoogleFontsJP,
@@ -125,7 +127,7 @@ Promise.all([
             };
             a.SvgText.addTexts(`cat2-${t}`, o, c);
         }
-        f = new e.Sprite(u), f.Font.add(i.GoogleFontsEN), f.Looks.hide();
+        f = new e.Sprite(y), f.Font.add(i.GoogleFontsEN), f.Looks.hide();
         for (const t of e.Iterator(k.length)){
             const o = k[t], c = {
                 fontFamily: i.GoogleFontsEN,
@@ -136,7 +138,7 @@ Promise.all([
             f.SvgText.addTexts(`${t}`, o, c);
         }
     };
-    y.setting = async function() {
+    g.setting = async function() {
         l.Event.whenFlag(async function*() {
             this.Event.broadcast("Clear");
         }), l.Event.whenBroadcastReceived("Start", async function*() {
