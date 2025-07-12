@@ -7,12 +7,21 @@ import type { IStage as Stage } from '@Type/stage'
 import type { ISprite as Sprite } from '@Type/sprite';
 
 //---------------------------------
-// Sub Inport
+// Sub Import
 //---------------------------------
 import { backdrop } from './sub/backdrop';
 import { Constant } from "./sub/constants";
 import { GoogleFonts } from "./sub/googleFonts";
 
+//---------------------------------
+// Assets Import
+//---------------------------------
+import GionSyojyaWav from './assets/gionsyojya.wav';
+
+
+//---------------------------------
+// ステージ、スプライト変数
+//---------------------------------
 const Sprite = "Sprite";
 const Gion = 'Gion';
 let stage:Stage;
@@ -26,7 +35,7 @@ Pg.preload = async function preload(this: PgMain) {
     this.Font.load(GoogleFonts.fontFaceUrlJPGuidance, Constant.GoogleFontsJPGuidance)
     this.Font.load(GoogleFonts.fontFaceUrlJP, Constant.GoogleFontsJP)
     this.Font.load(GoogleFonts.fontFaceUrlEN, Constant.GoogleFontsEN)
-    this.Sound.load('./assets/gionsyojya.wav', Gion);
+    this.Sound.load(GionSyojyaWav, Gion);
 }
 Pg.prepare = async function prepare() {
 

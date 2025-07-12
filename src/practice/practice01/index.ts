@@ -9,6 +9,17 @@ import type { ISprite as Sprite } from '@Type/sprite';
 
 
 // ---------------------------------
+// アセットをインポートする
+// ---------------------------------
+const CatSvg = 'https://amami-harhid.github.io/tscratch3assets/assets/cat.svg';
+const JurassicSvg = 'https://amami-harhid.github.io/tscratch3assets/assets/Jurassic.svg';
+
+// ---------------------------------
+// SUBをインポートする
+// ---------------------------------
+import { Constants } from "./sub/constants";
+
+// ---------------------------------
 // タイトルを設定する
 // ---------------------------------
 Pg.title = "Practice01";
@@ -21,7 +32,8 @@ let sprite: Sprite;
 
 // 事前ロード処理
 Pg.preload = async function( this: PgMain) {
-
+    this.Image.load(CatSvg, Constants.CAT);
+    this.Image.load(JurassicSvg, Constants.Jurassic);
 }
 
 // 事前準備処理
@@ -30,26 +42,19 @@ Pg.prepare = async function prepare() {
     // ステージを作る
     // --------------------
     stage = new Lib.Stage();
+    stage.Image.add(Constants.Jurassic)
     
     // --------------------
-    // ブロックを作る
+    // CAT スプライトを作る
     // --------------------
     sprite = new Lib.Sprite('sprite');
-
-
+    sprite.Image.add( Constants.CAT );
 }
 
 // イベント定義処理
 Pg.setting = async function setting() {
 
-    // 緑の旗が押されたときの動作
-    stage.Event.whenFlag(async function*( this: Stage ){
-
+    sprite.Event.whenFlag( async function( this: Sprite ){
+        this.Motion.Direction.degree = 90;
     });
-
-    // 緑の旗が押されたときの動作
-    sprite.Event.whenFlag(async function( this: Sprite ){
-
-    }); 
-
 }

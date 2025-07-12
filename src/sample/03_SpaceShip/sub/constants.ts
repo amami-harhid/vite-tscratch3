@@ -5,7 +5,7 @@ export const Constant = {
     Spaceship02 : "Spaceship02",
     BlackBground : "BlackBGround",
     Black: 'Black',
-    HarryPotter: "HarryPotter",
+    MoonLitHorta: "HarryPotter",
     Togemaru: "Togemaru",
     Explosion: "Explosion",
     Shot: "shot",

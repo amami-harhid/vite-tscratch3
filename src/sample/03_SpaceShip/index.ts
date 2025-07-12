@@ -34,7 +34,7 @@ import ExplosionWav from './assets/explosion.wav';
 import AsteroidSvg from './assets/universe_asteroid.svg';
 import SpaceShip01Svg from './assets/spaceShip1.svg';
 import SpaceShip02Svg from './assets/spaceShip2.svg';
-import HarryPotterWoff from './assets/HarryPotter-ov4z.woff';
+import MoonlitHortaTTF from './assets/MoonlitHorta.ttf';
 import ShotWav from './assets/shot.wav';
 import SpaceShipWhooshMp3 from './assets/spaceship-whoosh.mp3';
 
@@ -50,7 +50,7 @@ Pg.preload = async function preload( this: PgMain) {
     this.Image.load( AsteroidSvg, Constant.Asteroid);
     this.Image.load( SpaceShip01Svg, Constant.Spaceship01 );
     this.Image.load( SpaceShip02Svg, Constant.Spaceship02 );
-    this.Font.load( HarryPotterWoff, Constant.HarryPotter);
+    this.Font.load( MoonlitHortaTTF, Constant.MoonLitHorta);
 
     this.Sound.load( ExplosionWav, Constant.Explosion);
     this.Sound.load( ShotWav, Constant.Shot);
@@ -92,11 +92,11 @@ Pg.prepare = async function prepare() {
     // 大きさを 設定する
     textSprite.Looks.Size.scale = [200, 200]; //{w:200,h:200};
     // フォントを設定してテキストSVGをコスチュームに追加する
-    textSprite.Font.add(Constant.HarryPotter);
+    textSprite.Font.add(Constant.MoonLitHorta);
     const fontSize = 35;
     const fontStyle = 'italic';
     const color = '#ffffff';
-    const fontFamily = Constant.HarryPotter;
+    const fontFamily = Constant.MoonLitHorta;
     const option: TAddOption = {
         fontFamily: fontFamily,
         fontSize: fontSize,

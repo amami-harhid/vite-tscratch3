@@ -1,4 +1,4 @@
-import { _ as p, a as e, __tla as __tla_0 } from "../index-BI-1cn8T.js";
+import { _ as y, a as e, __tla as __tla_0 } from "../index-BI-1cn8T.js";
 Promise.all([
     (()=>{
         try {
@@ -98,16 +98,16 @@ Promise.all([
             return `https://fonts.googleapis.com/css2?family=${t}&display=swap&text='+${encodeURIComponent(n)}`;
         }
     }
-    const u = "Sprite", y = "Gion";
+    const b = "/assets/gionsyojya-a8CXI2F4.wav", u = "Sprite", p = "Gion";
     let l, h, a, f;
-    const m = s.textsGuidance, S = s.textsHeikeMonogatariJp, k = s.textsHeikeMonogatariEn;
-    p.preload = async function() {
-        this.Font.load(s.fontFaceUrlJPGuidance, i.GoogleFontsJPGuidance), this.Font.load(s.fontFaceUrlJP, i.GoogleFontsJP), this.Font.load(s.fontFaceUrlEN, i.GoogleFontsEN), this.Sound.load("./assets/gionsyojya.wav", y);
+    const S = s.textsGuidance, m = s.textsHeikeMonogatariJp, k = s.textsHeikeMonogatariEn;
+    y.preload = async function() {
+        this.Font.load(s.fontFaceUrlJPGuidance, i.GoogleFontsJPGuidance), this.Font.load(s.fontFaceUrlJP, i.GoogleFontsJP), this.Font.load(s.fontFaceUrlEN, i.GoogleFontsEN), this.Sound.load(b, p);
     };
-    p.prepare = async function() {
-        l = new e.Stage, l.Sound.add(y), l.SvgText.add("BackDrop", F), h = new e.Sprite(u), h.Font.add(i.GoogleFontsJPGuidance), h.Looks.hide();
-        for (const t of e.Iterator(m.length)){
-            const o = m[t], c = {
+    y.prepare = async function() {
+        l = new e.Stage, l.Sound.add(p), l.SvgText.add("BackDrop", F), h = new e.Sprite(u), h.Font.add(i.GoogleFontsJPGuidance), h.Looks.hide();
+        for (const t of e.Iterator(S.length)){
+            const o = S[t], c = {
                 fontFamily: i.GoogleFontsJPGuidance,
                 color: "white",
                 fontSize: 25,
@@ -116,8 +116,8 @@ Promise.all([
             h.SvgText.addTexts(`cat-${t}`, o, c);
         }
         a = new e.Sprite(u), a.Motion.Position.xy = {}, a.Font.add(i.GoogleFontsJP), a.Looks.hide();
-        for (const t of e.Iterator(S.length)){
-            const o = S[t], c = {
+        for (const t of e.Iterator(m.length)){
+            const o = m[t], c = {
                 fontFamily: i.GoogleFontsJP,
                 color: "red",
                 fontSize: 15,
@@ -136,11 +136,11 @@ Promise.all([
             f.SvgText.addTexts(`${t}`, o, c);
         }
     };
-    p.setting = async function() {
+    y.setting = async function() {
         l.Event.whenFlag(async function*() {
             this.Event.broadcast("Clear");
         }), l.Event.whenBroadcastReceived("Start", async function*() {
-            for(this.Looks.Effect.set(e.ImageEffective.GHOST, 95), this.Pen.clear();;)await this.Sound.playUntilDone(y), yield;
+            for(this.Looks.Effect.set(e.ImageEffective.GHOST, 95), this.Pen.clear();;)await this.Sound.playUntilDone(p), yield;
         }), l.Event.whenBroadcastReceived("Clear", async function*() {
             this.Pen.clear();
         }), h.Event.whenFlag(async function*() {
