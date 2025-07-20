@@ -12,4 +12,4 @@ export const Constant = {
     DEN: 'DEN',
     OK: 'OK',
     NG: 'NG',
-}
+} as const;

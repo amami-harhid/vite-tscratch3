@@ -1,3 +1,4 @@
+/** コンスタント定義 */
 export const Constant = {
     Asteroid: 'Asteroid',
     SpaceShipWoosh: 'SpaceShipWoosh',
@@ -13,4 +14,4 @@ export const Constant = {
     Debris02: 'Debris02',
     Debris03: 'Debris03',
     Bullet : 'bullet',
-}
+} as const;

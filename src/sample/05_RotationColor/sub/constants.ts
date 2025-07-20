@@ -19,4 +19,4 @@ export const Constant = {
 
     BlackBground: 'BlackBground',
     ShortMistery001: 'ShortMistery001',
-}
+} as const;

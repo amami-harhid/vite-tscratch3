@@ -5,4 +5,4 @@ export const Constant = {
     Cherry : "Cherry",
     Togemaru : "Togemaru",
     GoogleFont: "GoogleFont",
-}
+} as const;

@@ -6,4 +6,4 @@ export const Constant = {
     House: 'House',
     DogA: 'DogA',
     DogB: 'DogB',
-}
+} as const;

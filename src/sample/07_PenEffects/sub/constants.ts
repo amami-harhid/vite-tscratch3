@@ -7,4 +7,4 @@ export const Constant = {
     GoogleFontsJP : 'GoogleFontsJP',
     GoogleFontsEN : 'GoogleFontsEn',
 
-}
+} as const;

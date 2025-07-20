@@ -1,3 +1,4 @@
+/** グーグルフォントの定義 */
 export class GoogleFonts {
 
     static get texts(): string[][] {

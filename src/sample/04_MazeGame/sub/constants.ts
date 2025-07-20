@@ -15,4 +15,4 @@ export const Constant = {
     OpenDoor: 'OpenDoor',
     PikoPiko: 'PikoPiko',
 
-}
+} as const;

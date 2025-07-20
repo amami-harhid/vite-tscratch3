@@ -35,7 +35,7 @@ export const addGuidance = function(entity: Sprite) {
         fontSize: fontSize,
         fontStyle: fontStyle,
         color: color,
-    };
+    } as const;
     const texts = [
         "← / → を使って回転させよう",
         "迫ってくるドットを同じ色で受け止めよう"
@@ -56,7 +56,7 @@ export const addAlert = function(entity: Sprite) {
         fontSize: fontSize,
         fontStyle: fontStyle,
         color: color,
-    };
+    } as const;
     const texts = [
         "失敗数が１０になったらゲームオーバー",
     ];
@@ -76,7 +76,7 @@ export const addGameOverSvg = function(entity: Sprite) {
         fontSize: fontSize,
         fontStyle: fontStyle,
         color: color,
-    };
+    } as const;
     const texts = [
         "GameOver"
     ];

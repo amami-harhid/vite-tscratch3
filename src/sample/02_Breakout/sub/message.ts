@@ -10,4 +10,4 @@ export const Message = {
     Question: 'Question',
     GAME_START: 'GAME_START',
 
-}
+} as const;

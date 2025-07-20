@@ -24,8 +24,6 @@ const Texts3 = Qiz.textsAnswserJp;
 //---------------------------------
 // ステージ、スプライト変数の定義
 //---------------------------------
-const Sprite = "Sprite";
-let stage:Stage;
 let cat: Sprite;
 let guidanceText:Sprite, questionText:Sprite, answerText:Sprite;
 let reference: Sprite;
@@ -58,16 +56,15 @@ Pg.preload = async function preload(this: PgMain) {
 // --------------------------------
 // 事前準備処理
 // --------------------------------
-Pg.prepare = async function prepare() {
+Pg.prepare = async function prepare( this: PgMain ) {
 
     //-----------------------------
-    // ステージをつくる
+    // ステージを用意する
     //-----------------------------
-    stage = new Lib.Stage();
-    stage.SvgText.add('BackDrop', backdrop);
+    this.stage.SvgText.add('BackDrop', backdrop);
 
     //-----------------------------
-    reference = new Lib.Sprite('reference');
+    reference = new Lib.Sprite();
     reference.Font.add( Constant.GoogleFontsJP );
     reference.Motion.Position.xy = [180, -160];
     reference.Looks.Size.scale = [50, 50];
@@ -87,7 +84,7 @@ Pg.prepare = async function prepare() {
     //-----------------------------
     // スプライト（ネコ）をつくる
     //-----------------------------
-    cat = new Lib.Sprite('quizeCat');
+    cat = new Lib.Sprite();
     cat.Image.add( Constant.QUESTION );
     cat.Image.add( Constant.ZANNEN );
     cat.Image.add( Constant.SEIKAI );
@@ -100,7 +97,7 @@ Pg.prepare = async function prepare() {
     //-----------------------------
     // スプライト（ガイダンス）をつくる
     //-----------------------------
-    guidanceText = new Lib.Sprite(Sprite);
+    guidanceText = new Lib.Sprite();
     guidanceText.Font.add(Constant.GoogleFontsJPGuidance);
     guidanceText.Motion.Position.xy = [0, 80];
     guidanceText.Looks.Size.scale = [100, 400];
@@ -120,7 +117,7 @@ Pg.prepare = async function prepare() {
         guidanceText.SvgText.addTexts(`text01-${counter}`, texts,  option);
     }
 
-    questionText = new Lib.Sprite(Sprite);
+    questionText = new Lib.Sprite();
     questionText.Motion.Position.xy = [0, 50];
     questionText.Font.add( Constant.GoogleFontsJP );
     questionText.Looks.Size.scale = [90,100];
@@ -143,7 +140,7 @@ Pg.prepare = async function prepare() {
         questionText.SvgText.addTexts(`text02-${counter}-${correctAnswer}`, texts, option);
     }
 
-    answerText = new Lib.Sprite(Sprite);
+    answerText = new Lib.Sprite();
     answerText.Font.add( Constant.GoogleFontsEN );    
     answerText.Motion.Position.xy = [0, 80];
     answerText.Looks.Size.scale = [80, 80];
@@ -168,93 +165,133 @@ Pg.prepare = async function prepare() {
 // --------------------------------
 // イベント定義処理
 // --------------------------------
-Pg.setting = async function setting() {
+Pg.setting = async function setting( this: PgMain ) {
 
-    // スペースキーが押されるまで,またはステージタップされるまで待つ
+    /**
+     * 関数定義
+     * スペースキーが押された,またはステージタップされた、の判定処理
+     */ 
     const ReleaseStoper = () => {
-        if(stage.Sensing.isKeyDown(Lib.Keyboard.SPACE)){
+        // スペースキーが押されたときの判定
+        if(this.stage.Sensing.isKeyDown(Lib.Keyboard.SPACE)){
             return true;
         }
-        if(stage.Sensing.isMouseDown() ){
+        // ステージの範囲内で マウスダウンされた
+        if(this.stage.Sensing.isMouseDown() ){
             return true;
         }
         return false;
     }
+    /** 得点 */
     let point = 0;
     // ----------------------------
     // Message( QUESTION )を受け取ったときの動作
     // ----------------------------
-    stage.Event.whenBroadcastReceived( Messages.QUESTION, async function(this:Stage, quizeNo: number, correctAnswer: string, names:string[]){
-        const answer = await this.Sensing.askAndWait('番号を入れてね');
-        if(answer == '1' || answer == '2' || answer == '3') {
-            this.Event.broadcast(Messages.ANSWER, quizeNo );
-            if(answer == correctAnswer){
-                point+=1;
-                this.Event.broadcast(Messages.SEIKAI);
-            }else{
-                this.Event.broadcast(Messages.ZANNEN);
-            }
-            // スペースキーが押されるまで待つ
-            await this.Control.waitUntil(()=>ReleaseStoper());
+    this.stage.Event.whenBroadcastReceived( 
+        Messages.QUESTION, 
+        async function(
+            this:Stage, // パラメーター先頭は this の宣言に使われる
+            /**クイズ番号*/quizeNo: number, 
+            /**正解番号*/correctAnswer: '1'|'2'|'3', 
+            /** */names:string[]){
+            // 質問をして待つ
+            const answer = await this.Sensing.askAndWait('番号を入れてね');
+            // 答えが '1','2','3'のとき
+            if(answer == '1' || answer == '2' || answer == '3') {
+                // メッセージ(ANSWER)を送る、
+                this.Event.broadcast(Messages.ANSWER, quizeNo );
+                // 正解の判定
+                if(answer == correctAnswer){
+                    // 正解のとき
+                    // 得点をカウントアップ
+                    point+=1;
+                    // メッセージ(SEIKAI)を送る
+                    this.Event.broadcast(Messages.SEIKAI);
+                }else{
+                    // 不正解のとき
+                    // メッセージ(ZANNEN)を送る
+                    this.Event.broadcast(Messages.ZANNEN);
+                }
+                // スペースキーが押される,マウスダウンされるまで待つ
+                await this.Control.waitUntil(()=>ReleaseStoper());
 
-            if( quizeNo+1 > names.length-1) {
-                console.log('OWARI');
-                this.Event.broadcast(Messages.COMPLETE);
-            }else{
-                this.Event.broadcast(Messages.QIZ, quizeNo+1 )
-            }
+                if( quizeNo+1 > names.length-1) {
+                    // メッセージ(COMPLETE)を送る
+                    this.Event.broadcast(Messages.COMPLETE);
+                }else{
+                    // メッセージ(QIZ)を送る、クイズ番号はカウントアップしてから渡す
+                    this.Event.broadcast(Messages.QIZ, quizeNo+1 )
+                }
         
-        }else{
-            this.Event.broadcast(Messages.QIZ, quizeNo);
-        }
-
-    });
+            }else{
+                // メッセージ(QIZ)を送る、クイズ番号は現番号を渡す
+                this.Event.broadcast(Messages.QIZ, quizeNo);
+            }
+        });
 
     // ----------------------------
     // 旗を押されたときの動作
     // ----------------------------
-    cat.Event.whenFlag( async function(this:Sprite){
+    cat.Event.whenFlag( async function( this:Sprite ){
+        // ネコを隠す
         this.Looks.hide();
+        // 得点をゼロにする
         point = 0;
+        // メッセージ(INIT)を送る
         this.Event.broadcast(Messages.INIT);
     });
     // ----------------------------
     // Message( INIT )を受け取ったときの動作
     // ----------------------------
-    cat.Event.whenBroadcastReceived(Messages.INIT, async function(this:Sprite){
+    cat.Event.whenBroadcastReceived(Messages.INIT, async function( this:Sprite ){
+        // ネコを表示する
         this.Looks.show();
     });
     // ----------------------------
     // Message( QIZ )を受け取ったときの動作
     // ----------------------------
-    cat.Event.whenBroadcastReceived(Messages.QIZ, async function(this:Sprite){
+    cat.Event.whenBroadcastReceived(Messages.QIZ, async function( this:Sprite ){
+        // ネコを表示する
         this.Looks.show();
+        // 「デデンッ」を鳴らす
         this.Sound.play(Constant.DEN); // 問題を出すときの「デデンッ」の音
+        // コスチュームを切り替える（出題のコスチューム）
         this.Looks.Costume.name = Constant.QUESTION;        
     });
     // ----------------------------
     // Message( SEIKAI )を受け取ったときの動作
     // ----------------------------
     cat.Event.whenBroadcastReceived(Messages.SEIKAI, async function(this:Sprite){
+        // ネコを表示する
         this.Looks.show();
+        // 「正解」の音を鳴らす
         this.Sound.play(Constant.OK); // 正解の音
+        // コスチュームを切り替える（正解のコスチューム）
         this.Looks.Costume.name = Constant.SEIKAI;        
     });
     // ----------------------------
     // Message( ZANNEN )を受け取ったときの動作
     // ----------------------------
     cat.Event.whenBroadcastReceived(Messages.ZANNEN, async function(this:Sprite){
+        // ネコを表示する
         this.Looks.show();
+        // 「不正解」の音を鳴らす
         this.Sound.play(Constant.NG); // 不正解の音
+        // コスチュームを切り替える（不正解のコスチューム）
         this.Looks.Costume.name = Constant.ZANNEN;        
     });
     // ----------------------------
     // Message( COMPLETE )を受け取ったときの動作
     // ----------------------------
     cat.Event.whenBroadcastReceived(Messages.COMPLETE, async function(this:Sprite){
+        // 得点の判定
         if(point > 5) {
+            // 得点数が多いとき
+            // 正解のコスチュームにする
             this.Looks.Costume.name = Constant.SEIKAI;
         }else{
+            // 得点数が少ないとき
+            // 残念のコスチュームにする
             this.Looks.Costume.name = Constant.ZANNEN;
         }
     });
@@ -262,10 +299,15 @@ Pg.setting = async function setting() {
     // 旗を押されたときの動作
     // ----------------------------
     guidanceText.Event.whenFlag( async function(this:Sprite){
+        // ガイダンスを隠す
         this.Looks.hide();
+        // 位置座標を設定
         this.Motion.Position.xy = [0, 80];
+        // 大きさ(横/縦)を設定
         this.Looks.Size.scale = [100, 400];
+        // すこし待つ
         await this.Control.wait(0.5);
+        // 
         this.Looks.Costume.name = 'text01-0';
         this.Looks.show();
         await this.Control.wait(1);

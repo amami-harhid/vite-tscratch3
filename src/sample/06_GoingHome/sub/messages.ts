@@ -6,4 +6,4 @@ export const Message = {
     View: 'View',
     Small: 'Small',
     GameOver: 'GameOver',
-}
+} as const;

@@ -4,4 +4,4 @@
 export const Message = {
     Start: 'Start',
 
-}
+} as const;

@@ -1,4 +1,6 @@
+/** メッセージ定義 */
 export const Messages = {
+
     QUESTION: 'QUESTION',
     INIT: 'INIT',
     QIZ: 'QUIZE',
@@ -6,6 +8,5 @@ export const Messages = {
     ZANNEN: 'ZANNEN',
     ANSWER: 'ANSWER',
     COMPLETE: 'COMPLETE',
-    
 
-}
+} as const;

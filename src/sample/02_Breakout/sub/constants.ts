@@ -10,4 +10,4 @@ export const Constant = {
     HarryPotter: "HarryPotter",
     Pew: 'Pew',
     MonitorPoint: 'MonitorPoint',
-}
+} as const;
