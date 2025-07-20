@@ -17,7 +17,6 @@ Pg.title = "Space ship game"
 //---------------------------------
 // ステージ、スプライト変数の定義
 //---------------------------------
-let stage: Stage;
 let spaceShip: Sprite;
 let textSprite: Sprite, bullet: Sprite;
 let spaceDebris: Sprite;
@@ -60,16 +59,15 @@ Pg.preload = async function preload( this: PgMain) {
 // --------------------------------
 // 事前準備処理
 // --------------------------------
-Pg.prepare = async function prepare() {
+Pg.prepare = async function prepare( this:PgMain ) {
     //----------------
-    // ステージを作る
+    // ステージを用意する
     //----------------
-    stage = new Lib.Stage();
     // 背景を追加
-    stage.Image.add(Constant.Asteroid);
-    stage.SvgText.add( Constant.BlackBground, BlackBackdrop );
+    this.stage.Image.add(Constant.Asteroid);
+    this.stage.SvgText.add( Constant.BlackBground, BlackBackdrop );
     // 背景、幽霊の効果を 20%にする
-    stage.Looks.Effect.set(Lib.ImageEffective.GHOST, 20);
+    this.stage.Looks.Effect.set(Lib.ImageEffective.GHOST, 20);
     
     //----------------
     // スプライト（宇宙船）を作る
@@ -148,9 +146,9 @@ Pg.prepare = async function prepare() {
 // --------------------------------
 // イベント定義処理
 // --------------------------------
-Pg.setting = async function setting() {
+Pg.setting = async function setting( this:PgMain ) {
     // 緑の旗が押されたときの動作
-    stage.Event.whenFlag(async function*( this: Stage ){
+    this.stage.Event.whenFlag(async function*( this: Stage ){
         // 音を追加(宇宙の音)
         this.Sound.add(Constant.SpaceShipWoosh);
         // 音量を設定

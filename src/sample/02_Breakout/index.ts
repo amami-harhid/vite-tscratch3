@@ -34,7 +34,6 @@ Pg.title = "ブロック崩し"
 // ---------------------------------
 // ステージとスプライトの変数を定義する
 // ---------------------------------
-let stage: Stage;
 let block: Sprite;
 let textSprite: Sprite;
 let ball: Sprite;
@@ -49,15 +48,14 @@ Pg.preload = async function( this: PgMain) {
     this.Sound.load( PewWav, Constant.Pew );
     this.Font.load( TogemaruWoff, Constant.Togemaru);
 }
-Pg.prepare = async function prepare() {
+Pg.prepare = async function prepare( this: PgMain ) {
     // --------------------
-    // ステージを作る
+    // ステージを取り込む
     // --------------------
-    stage = new Lib.Stage();
     // ステージに背景を追加
-    stage.Image.add( Constant.Forest );
-    stage.Sound.add(Constant.BGM);
-    stage.Sound.setOption(Lib.SoundOption.VOLUME, 10);
+    this.stage.Image.add( Constant.Forest );
+    this.stage.Sound.add(Constant.BGM);
+    this.stage.Sound.setOption(Lib.SoundOption.VOLUME, 10);
     
     // --------------------
     // ブロックを作る
@@ -114,7 +112,7 @@ Pg.prepare = async function prepare() {
 Pg.setting = async function setting() {
 
     // 緑の旗が押されたときの動作
-    stage.Event.whenFlag(async function*( this: Stage ){
+    this.stage.Event.whenFlag(async function*( this: Stage ){
         // モニター得点を初期化
         monitors.get( Constant.MonitorPoint ).value = 0;
         // 背景を Black にする
@@ -122,18 +120,18 @@ Pg.setting = async function setting() {
         // ずっと繰り返し、終わるまで音を鳴らす（BGM)
         let volume = 50;
         // 音の大きさを設定
-        stage.Sound.setOption(Lib.SoundOption.VOLUME, volume);
+        this.Sound.setOption(Lib.SoundOption.VOLUME, volume);
         for(;;){
             // 音の大きさを設定
-            stage.Sound.setOption(Lib.SoundOption.VOLUME, volume);
+            this.Sound.setOption(Lib.SoundOption.VOLUME, volume);
             // 終わるまで音を鳴らす
-            await stage.Sound.playUntilDone(Constant.BGM);
+            await this.Sound.playUntilDone(Constant.BGM);
             // 音が100より小さいときに音をだんだん大きくする
             if(volume < 100){
                 // 音を大きくする
                 volume += 10;
                 // 音の大きさを設定
-                stage.Sound.setOption(Lib.SoundOption.VOLUME, volume);
+                this.Sound.setOption(Lib.SoundOption.VOLUME, volume);
             }
             yield;
         }
@@ -255,7 +253,7 @@ Pg.setting = async function setting() {
     });
 
     // メッセージ（Question)を受け取ったときの動作
-    stage.Event.whenBroadcastReceived( Message.Question, async function*( this: Stage ){
+    this.stage.Event.whenBroadcastReceived( Message.Question, async function*( this: Stage ){
         // バーサイズ変数の定義
         let barSize = 0;
         // ずっと繰り返す（ 質問の答えが 1,2,3 のとき、繰り返しを抜ける）

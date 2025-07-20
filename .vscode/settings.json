@@ -7,6 +7,6 @@
     "IDX.aI.enableCodebaseIndexing": true,
     "typescript.enablePromptUseWorkspaceTsdk": false,
     "liveServer.settings.donotShowInfoMsg": true,
-    "liveServer.settings.root": "/dist",
+    "liveServer.settings.root": "/docs",
     "vite.base": "./src/",
 }

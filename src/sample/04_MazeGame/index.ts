@@ -16,8 +16,6 @@ Pg.title = "迷路ゲーム"
 //---------------------------------
 // ステージ、スプライト変数の定義
 //---------------------------------
-/** ステージ */
-let stage: Stage;
 /** カエル */
 let frog: Sprite;
 /** テキスト */
@@ -54,17 +52,13 @@ Pg.preload = async function preload( this: PgMain ) {
 // --------------------------------
 // 事前準備処理
 // --------------------------------
-Pg.prepare = async function prepare() {
+Pg.prepare = async function prepare( this:PgMain) {
 
-    //----------------
-    // ステージを作る
-    //----------------
-    stage = new Lib.Stage();
     // ステージに背景を追加
-    stage.Image.add(Constant.Maze1);
-    stage.Image.add(Constant.Maze2);
-    stage.Image.add(Constant.Maze3);
-    stage.Looks.Effect.set(Lib.ImageEffective.GHOST, 100);
+    this.stage.Image.add(Constant.Maze1);
+    this.stage.Image.add(Constant.Maze2);
+    this.stage.Image.add(Constant.Maze3);
+    this.stage.Looks.Effect.set(Lib.ImageEffective.GHOST, 100);
 
     //----------------
     // スプライト（カエル）を作る
@@ -99,10 +93,10 @@ Pg.prepare = async function prepare() {
 // --------------------------------
 // イベント定義処理
 // --------------------------------
-Pg.setting = async function setting() {
+Pg.setting = async function setting( this: PgMain ) {
 
     // 緑の旗が押されたときの動作    
-    stage.Event.whenFlag(async function*( this: Stage ){
+    this.stage.Event.whenFlag(async function*( this: Stage ){
         // 幽霊の効果
         this.Looks.Effect.set(Lib.ImageEffective.GHOST, 100);
         // 背景を指定
@@ -110,7 +104,7 @@ Pg.setting = async function setting() {
     });
 
     // メッセージ(Start)を受け取ったときの動作
-    stage.Event.whenBroadcastReceived( Message.Start, async function*( this: Stage ){
+    this.stage.Event.whenBroadcastReceived( Message.Start, async function*( this: Stage ){
         // 幽霊の効果 ( 0% ) : 完全非透明
         this.Looks.Effect.set(Lib.ImageEffective.GHOST, 0);
         // 音を追加

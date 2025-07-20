@@ -28,8 +28,9 @@ Pg.title = "【01_CherryBlossom】桜の花びらが舞う"
 //---------------------------------
 // ステージ、スプライト変数の定義
 //---------------------------------
-let stage: Stage;
+/** テキストスプライト */
 let textSprite: Sprite;
+/** 桜はなびらスプライト */
 let cherry: Sprite;
 
 //---------------------------------
@@ -51,12 +52,13 @@ Pg.preload = async function preload(this:PgMain) {
 // --------------------------------
 // 事前準備処理
 // --------------------------------
-Pg.prepare = async function prepare() {
-    // ステージを作る
-    stage = new Lib.Stage();
+Pg.prepare = async function prepare( this:PgMain ) {
+
     // ステージに背景を追加
-    stage.Image.add( Constant.Forest );
-    stage.SvgText.add( "Black", BlackBackdrop );
+    this.stage.Image.add( Constant.Forest );
+    this.stage.SvgText.add( "Black", BlackBackdrop );
+
+    // テキストスプライトを作る
     textSprite = new Lib.Sprite('Introduction');
     textSprite.Font.add(Constant.GoogleFont);
     const texts01 = GoogleFonts.texts[0];
@@ -71,6 +73,7 @@ Pg.prepare = async function prepare() {
     textSprite.SvgText.addTexts("1", texts02, option);
     textSprite.Looks.hide();
 
+    // 桜はなびらのスプライトを作る
     cherry = new Lib.Sprite('Cherry');
     cherry.Image.add( Constant.Cherry );
     cherry.Looks.Size.scale = [20, 20];
@@ -82,7 +85,7 @@ Pg.prepare = async function prepare() {
 Pg.setting = async function setting() {
 
     // 【ステージ】緑の旗が押されたときの動作の定義
-    stage.Event.whenFlag(async function*(this:Stage){
+    this.stage.Event.whenFlag(async function*(this:Stage){
         this.Looks.Backdrop.name = "Black";
         // 花びらスタンプの跡を残すために透明度を高めておく
         this.Looks.Effect.set(Lib.ImageEffective.GHOST, 99);
