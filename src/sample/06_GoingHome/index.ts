@@ -157,7 +157,7 @@ Pg.setting = async function setting( this : PgMain) {
             // Y座標を (5)ずつ減らす
             this.Motion.Position.y -= 5;
             // 色[黒](#000000)に触れたかの判定
-            if( this.Sensing.isTouchingToColor('#000000')){
+            if( this.Sensing.Color.isTouching('#000000')){
                 // Y座標を(6)ずつ変える 
                 this.Motion.Position.y += 6;
                 // タッチした
@@ -166,7 +166,7 @@ Pg.setting = async function setting( this : PgMain) {
                 this.Motion.Move.steps(10);
             }
             // 色[青](#0000ff)に触れている間、繰り返す
-            while( this.Sensing.isTouchingToColor('#0000ff')){
+            while( this.Sensing.Color.isTouching('#0000ff')){
                 // Y座標を(6)ずつ変える 
                 this.Motion.Position.y += 6;
                 // タッチした
@@ -174,12 +174,12 @@ Pg.setting = async function setting( this : PgMain) {
                 yield;
             }
             // 色[赤](#ff0019)に触れたかの判定
-            if( this.Sensing.isTouchingToColor('#ff0019')) {
+            if( this.Sensing.Color.isTouching('#ff0019')) {
                 // 繰り返しを抜ける
                 break;
             }
             // 端に触れたかの判定
-            if( this.Sensing.isTouchingEdge()) {
+            if( this.Sensing.Edge.isTouching) {
                 // 繰り返しを抜ける
                 break;
             }
@@ -213,7 +213,7 @@ Pg.setting = async function setting( this : PgMain) {
             // ペンスプライトをマウスの位置に移動させる
             this.Motion.Move.mousePosition();
             // マウスが押されたときの判定
-            if(this.Sensing.isMouseDown()) {
+            if(this.Sensing.Mouse.isDown) {
                 // ペンを下げる
                 this.Pen.down();
     

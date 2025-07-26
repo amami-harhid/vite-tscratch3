@@ -178,12 +178,12 @@ Pg.setting = async function setting( this:PgMain ) {
         // ずっと繰り返す
         for(;;){
             // 右矢印キーが押されたとき
-            if(this.Sensing.isKeyDown(Lib.Keyboard.RIGHT)) {
+            if(this.Sensing.Key.isDown(Lib.Keyboard.RIGHT)) {
                 // X座標を 増やす
                 this.Motion.Position.x += MoveStep;
             }
             // 左矢印キーが押されたとき
-            if(this.Sensing.isKeyDown(Lib.Keyboard.LEFT)) {
+            if(this.Sensing.Key.isDown(Lib.Keyboard.LEFT)) {
                 // X座標を 減らす
                 this.Motion.Position.x -= MoveStep;                
             }
@@ -199,7 +199,7 @@ Pg.setting = async function setting( this:PgMain ) {
         // ずっと繰り返す
         for(;;){
             // スペースキーが押されたとき
-            if(this.Sensing.isKeyDown(Lib.Keyboard.SPACE)) {
+            if(this.Sensing.Key.isDown(Lib.Keyboard.SPACE)) {
                 // 弾のクローンを作る
                 bullet.Control.clone();
                 // 音を鳴らす（発射音）
@@ -247,7 +247,7 @@ Pg.setting = async function setting( this:PgMain ) {
         // ずっと繰り返す
         for(;;){
             // 端に触れたとき
-            if(this.Sensing.isTouchingEdge()){
+            if(this.Sensing.Edge.isTouching){
                 // 繰り返しを抜ける
                 break;
             }
@@ -297,13 +297,13 @@ Pg.setting = async function setting( this:PgMain ) {
         // ずっと繰り返す
         for(;;) {
             // 底に触れたとき
-            if(this.Sensing.isTouchingToSprites([bottom])) {
+            if(this.Sensing.Sprite.isTouching([bottom])) {
                 // 隠して 繰り返しを抜ける
                 this.Looks.hide();
                 break;
             }
             // 弾に触れたとき
-            if(this.Sensing.isTouchingToSprites([bullet])){
+            if(this.Sensing.Sprite.isTouching([bullet])){
                 // 音を鳴らす（爆発音）
                 this.Sound.play(Constant.Explosion);
                 // コスチュームを「爆発」にする

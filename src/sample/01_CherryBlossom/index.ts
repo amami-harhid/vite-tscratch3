@@ -113,7 +113,7 @@ Pg.setting = async function setting() {
     // 【テキスト】メッセージ（IntroStart)を受け取ったときの動作の定義
     textSprite.Event.whenBroadcastReceived('IntroStart', async function*(this:Sprite){
         for(;;){
-            if(this.Sensing.isMouseTouching()){
+            if(this.Sensing.Mouse.isTouching){
                 this.Event.broadcast('CherryStart');
                 this.Control.stopOtherScripts(this);
                 this.Looks.hide();

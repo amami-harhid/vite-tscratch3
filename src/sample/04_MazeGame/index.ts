@@ -166,12 +166,12 @@ Pg.setting = async function setting( this: PgMain ) {
         // 進ませる
         entity.Motion.Move.steps( STEPS );
         // 白色( #ffffff )に触れたとき
-        if(entity.Sensing.isTouchingToColor('#ffffff')) {
+        if(entity.Sensing.Color.isTouching('#ffffff')) {
             // 元に戻す
             entity.Motion.Move.steps( -STEPS );
         }
         // 端に触れたとき
-        if(entity.Sensing.isTouchingEdge()) {
+        if(entity.Sensing.Edge.isTouching) {
             // 元に戻す
             entity.Motion.Move.steps( -STEPS );
         }
@@ -181,45 +181,45 @@ Pg.setting = async function setting( this: PgMain ) {
     frog.Event.whenBroadcastReceived( Message.Start, async function*( this: Sprite ) {
         // ずっと繰り返す
         for(;;){
-            if(this.Sensing.isKeyDown(Lib.Keyboard.UP)){
+            if(this.Sensing.Key.isDown(Lib.Keyboard.UP)){
                 // 上向き矢印キーが押されたとき
                 // 上向きにすすむ（進めないときは戻る）
                 move(this,0);
                 // 音を鳴らす
                 this.Sound.play( Constant.PikoPiko );
-            } else if(this.Sensing.isKeyDown(Lib.Keyboard.DOWN)){
+            } else if(this.Sensing.Key.isDown(Lib.Keyboard.DOWN)){
                 // 下向き矢印キーが押されたとき
                 // 下向きにすすむ（進めないときは戻る）
                 move(this,180);
                 // 音を鳴らす
                 this.Sound.play( Constant.PikoPiko );
-            } else if(this.Sensing.isKeyDown(Lib.Keyboard.RIGHT)){
+            } else if(this.Sensing.Key.isDown(Lib.Keyboard.RIGHT)){
                 // 右向き矢印キーが押されたとき
                 // 右向きにすすむ（進めないときは戻る）
                 move(this,90);
                 // 音を鳴らす
                 this.Sound.play( Constant.PikoPiko );
-            } else if(this.Sensing.isKeyDown(Lib.Keyboard.LEFT)){
+            } else if(this.Sensing.Key.isDown(Lib.Keyboard.LEFT)){
                 // 左向き矢印キーが押されたとき
                 // 左向きにすすむ（進めないときは戻る）
                 move(this,-90);
                 // 音を鳴らす
                 this.Sound.play( Constant.PikoPiko );
-            } else if(this.Sensing.isTouchingToColor('#ff0000')) {
+            } else if(this.Sensing.Color.isTouching('#ff0000')) {
                 // 赤色に触れたとき
                 console.log('RED');
                 // 音を鳴らす
                 this.Sound.play( Constant.Judge );
                 // 次の背景にする
                 this.Looks.Backdrop.next();
-            } else if(this.Sensing.isTouchingToColor('#006bff')) {
+            } else if(this.Sensing.Color.isTouching('#006bff')) {
                 // 青色に触れたとき
                 console.log('BLUE');
                 // 音を鳴らす
                 this.Sound.play( Constant.OpenDoor );
                 // 次の背景にする
                 this.Looks.Backdrop.next();
-            } else if(this.Sensing.isTouchingToColor('#f00000')) {
+            } else if(this.Sensing.Color.isTouching('#f00000')) {
                 // 出口に触れたとき
                 console.log('出口');
                 // 繰り返しを抜ける

@@ -173,11 +173,11 @@ Pg.setting = async function setting( this: PgMain ) {
      */ 
     const ReleaseStoper = () => {
         // スペースキーが押されたときの判定
-        if(this.stage.Sensing.isKeyDown(Lib.Keyboard.SPACE)){
+        if(this.stage.Sensing.Key.isDown(Lib.Keyboard.SPACE)){
             return true;
         }
         // ステージの範囲内で マウスダウンされた
-        if(this.stage.Sensing.isMouseDown() ){
+        if(this.stage.Sensing.Mouse.isDown ){
             return true;
         }
         return false;

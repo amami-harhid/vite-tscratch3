@@ -265,11 +265,11 @@ Pg.setting = async function setting( this: PgMain ) {
         const DEGREE = 5;
         // ずっと繰り返す
         for(;;) {
-            if(this.Sensing.isKeyDown(Lib.Keyboard.RIGHT)) {
+            if(this.Sensing.Key.isDown(Lib.Keyboard.RIGHT)) {
                 // 右向き矢印がおされたとき
                 // 向きを(DEGREE)ずつ変える( 右向きに回転 )
                 this.Motion.Direction.degree += DEGREE;
-            }else if(this.Sensing.isKeyDown(Lib.Keyboard.LEFT)) {
+            }else if(this.Sensing.Key.isDown(Lib.Keyboard.LEFT)) {
                 // 左向き矢印がおされたとき
                 // 向きを(-DEGREE)ずつ変える( 左向きに回転 )
                 this.Motion.Direction.degree -= DEGREE;
@@ -360,13 +360,13 @@ Pg.setting = async function setting( this: PgMain ) {
             // 少しずつ進む
             this.Motion.Move.steps(STEPS);
             // スプライト「controller」に触れたときの判定
-            if( this.Sensing.isTouchingToSprites([controller])) {
+            if( this.Sensing.Sprite.isTouching([controller])) {
                 // 少し進む
                 this.Motion.Move.steps(STEPS);
                 // コントローラーに触っていて、赤色が赤色へ、黄色が黄色へ、青色が青色に触れたら
-                if( (costumeName == Constant.RedBall && this.Sensing.isTouchingToColor(RedBallColor)) ||
-                    (costumeName == Constant.YellowBall && this.Sensing.isTouchingToColor(YellowBallColor)) ||
-                    (costumeName == Constant.BlueBall && this.Sensing.isTouchingToColor(BlueBallColor)) ) {
+                if( (costumeName == Constant.RedBall && this.Sensing.Color.isTouching(RedBallColor)) ||
+                    (costumeName == Constant.YellowBall && this.Sensing.Color.isTouching(YellowBallColor)) ||
+                    (costumeName == Constant.BlueBall && this.Sensing.Color.isTouching(BlueBallColor)) ) {
                     // 音を鳴らす
                     this.Sound.play( Constant.Chanting );
                     // 点数を増やす( +2 )

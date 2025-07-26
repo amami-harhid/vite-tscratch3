@@ -1,4 +1,4 @@
-import { _ as w, a as b, __tla as __tla_0 } from "../index-BI-1cn8T.js";
+import { _ as S, a as f, __tla as __tla_0 } from "../index-Bmbx4PuQ.js";
 Promise.all([
     (()=>{
         try {
@@ -6,7 +6,7 @@ Promise.all([
         } catch  {}
     })()
 ]).then(async ()=>{
-    const T = `
+    const m = `
 <svg xmlns="http://www.w3.org/2000/svg" width="480" height="360" viewBox="0 0 480 360">
     <rect width="480" height="360" fill="#000000" />
 </svg>
@@ -142,16 +142,16 @@ Promise.all([
             return `https://fonts.googleapis.com/css2?family=${h}&display=swap&text='+${encodeURIComponent(n)}`;
         }
     }
-    const L = "/assets/blackCat01-5DfUgPqk.svg", F = "/assets/blackCat02-BDtzF7Oy.svg", C = "/assets/blackCat03-BisdsYxq.svg", G = "/assets/den-JIQ9x_Nd.mp3", P = "/assets/OK-Jdg1c7Sk.mp3", A = "/assets/NG-BYQBgWQH.mp3", I = r.textsGuidance, N = r.textsQizJp, v = r.textsAnswserJp, x = "Sprite";
-    let E, a, u, d, f, S;
-    w.preload = async function() {
-        this.Image.load(L, t.QUESTION), this.Image.load(F, t.ZANNEN), this.Image.load(C, t.SEIKAI), this.Font.load(r.fontFaceUrlJPGuidance, t.GoogleFontsJPGuidance), this.Font.load(r.fontFaceUrlJP, t.GoogleFontsJP), this.Font.load(r.fontFaceUrlEN, t.GoogleFontsEN), this.Sound.load(G, t.DEN), this.Sound.load(P, t.OK), this.Sound.load(A, t.NG);
+    const k = "/assets/blackCat01-5DfUgPqk.svg", T = "/assets/blackCat02-BDtzF7Oy.svg", L = "/assets/blackCat03-BisdsYxq.svg", F = "/assets/den-JIQ9x_Nd.mp3", C = "/assets/OK-Jdg1c7Sk.mp3", G = "/assets/NG-BYQBgWQH.mp3", p = r.textsGuidance, y = r.textsQizJp, N = r.textsAnswserJp;
+    let a, u, d, b, E;
+    S.preload = async function() {
+        this.Image.load(k, t.QUESTION), this.Image.load(T, t.ZANNEN), this.Image.load(L, t.SEIKAI), this.Font.load(r.fontFaceUrlJPGuidance, t.GoogleFontsJPGuidance), this.Font.load(r.fontFaceUrlJP, t.GoogleFontsJP), this.Font.load(r.fontFaceUrlEN, t.GoogleFontsEN), this.Sound.load(F, t.DEN), this.Sound.load(C, t.OK), this.Sound.load(G, t.NG);
     };
-    w.prepare = async function() {
-        E = new b.Stage, E.SvgText.add("BackDrop", T), S = new b.Sprite("reference"), S.Font.add(t.GoogleFontsJP), S.Motion.Position.xy = [
+    S.prepare = async function() {
+        this.stage.SvgText.add("BackDrop", m), E = new f.Sprite, E.Font.add(t.GoogleFontsJP), E.Motion.Position.xy = [
             180,
             -160
-        ], S.Looks.Size.scale = [
+        ], E.Looks.Size.scale = [
             50,
             50
         ];
@@ -162,17 +162,17 @@ Promise.all([
                 fontSize: 15,
                 fontStyle: "bold"
             };
-            S.SvgText.addTexts("ref", [
+            E.SvgText.addTexts("ref", [
                 "小学生向けクイズ<br/>https://hisasuke.com/"
             ], g);
         }
-        a = new b.Sprite("quizeCat"), a.Image.add(t.QUESTION), a.Image.add(t.ZANNEN), a.Image.add(t.SEIKAI), a.Motion.Position.xy = [
+        a = new f.Sprite, a.Image.add(t.QUESTION), a.Image.add(t.ZANNEN), a.Image.add(t.SEIKAI), a.Motion.Position.xy = [
             0,
             -100
         ], a.Looks.Size.scale = [
             60,
             50
-        ], a.Sound.add(t.DEN), a.Sound.add(t.OK), a.Sound.add(t.NG), u = new b.Sprite(x), u.Font.add(t.GoogleFontsJPGuidance), u.Motion.Position.xy = [
+        ], a.Sound.add(t.DEN), a.Sound.add(t.OK), a.Sound.add(t.NG), u = new f.Sprite, u.Font.add(t.GoogleFontsJPGuidance), u.Motion.Position.xy = [
             0,
             80
         ], u.Looks.Size.scale = [
@@ -185,51 +185,51 @@ Promise.all([
             fontSize: 25,
             fontStyle: "bold"
         };
-        for (const i of b.Iterator(I.length)){
-            const e = I[i];
+        for (const i of f.Iterator(p.length)){
+            const e = p[i];
             u.SvgText.addTexts(`text01-${i}`, e, c);
         }
-        d = new b.Sprite(x), d.Motion.Position.xy = [
+        d = new f.Sprite, d.Motion.Position.xy = [
             0,
             50
         ], d.Font.add(t.GoogleFontsJP), d.Looks.Size.scale = [
             90,
             100
         ], d.Looks.hide();
-        for (const i of b.Iterator(N.length)){
-            const e = N[i], l = e[0];
+        for (const i of f.Iterator(y.length)){
+            const e = y[i], l = e[0];
             e.shift();
-            const k = {
+            const I = {
                 fontFamily: t.GoogleFontsJP,
                 color: "white",
                 fontSize: 20,
                 fontStyle: "normal"
             };
-            d.SvgText.addTexts(`text02-${i}-${l}`, e, k);
+            d.SvgText.addTexts(`text02-${i}-${l}`, e, I);
         }
-        f = new b.Sprite(x), f.Font.add(t.GoogleFontsEN), f.Motion.Position.xy = [
+        b = new f.Sprite, b.Font.add(t.GoogleFontsEN), b.Motion.Position.xy = [
             0,
             80
-        ], f.Looks.Size.scale = [
+        ], b.Looks.Size.scale = [
             80,
             80
-        ], f.Looks.hide();
-        for (const i of b.Iterator(v.length)){
-            const e = v[i], y = {
+        ], b.Looks.hide();
+        for (const i of f.Iterator(N.length)){
+            const e = N[i], w = {
                 fontFamily: t.GoogleFontsEN,
                 color: "white",
                 fontSize: 25,
                 fontStyle: "normal"
             };
-            f.SvgText.addTexts(`text03-${i}`, e, y);
+            b.SvgText.addTexts(`text03-${i}`, e, w);
         }
     };
-    w.setting = async function() {
-        const h = ()=>!!(E.Sensing.isKeyDown(b.Keyboard.SPACE) || E.Sensing.isMouseDown());
+    S.setting = async function() {
+        const h = ()=>!!(this.stage.Sensing.Key.isDown(f.Keyboard.SPACE) || this.stage.Sensing.Mouse.isDown);
         let s = 0;
-        E.Event.whenBroadcastReceived(o.QUESTION, async function(n, c, i) {
+        this.stage.Event.whenBroadcastReceived(o.QUESTION, async function(n, c, i) {
             const e = await this.Sensing.askAndWait("番号を入れてね");
-            e == "1" || e == "2" || e == "3" ? (this.Event.broadcast(o.ANSWER, n), e == c ? (s += 1, this.Event.broadcast(o.SEIKAI)) : this.Event.broadcast(o.ZANNEN), await this.Control.waitUntil(()=>h()), n + 1 > i.length - 1 ? (console.log("OWARI"), this.Event.broadcast(o.COMPLETE)) : this.Event.broadcast(o.QIZ, n + 1)) : this.Event.broadcast(o.QIZ, n);
+            e == "1" || e == "2" || e == "3" ? (this.Event.broadcast(o.ANSWER, n), e == c ? (s += 1, this.Event.broadcast(o.SEIKAI)) : this.Event.broadcast(o.ZANNEN), await this.Control.waitUntil(()=>h()), n + 1 > i.length - 1 ? this.Event.broadcast(o.COMPLETE) : this.Event.broadcast(o.QIZ, n + 1)) : this.Event.broadcast(o.QIZ, n);
         }), a.Event.whenFlag(async function() {
             this.Looks.hide(), s = 0, this.Event.broadcast(o.INIT);
         }), a.Event.whenBroadcastReceived(o.INIT, async function() {
@@ -295,13 +295,13 @@ Promise.all([
             this.Looks.hide();
         }), d.Event.whenBroadcastReceived(o.COMPLETE, async function() {
             this.Looks.hide();
-        }), f.Event.whenBroadcastReceived(o.INIT, async function() {
+        }), b.Event.whenBroadcastReceived(o.INIT, async function() {
             this.Looks.hide();
-        }), f.Event.whenBroadcastReceived(o.QIZ, async function() {
+        }), b.Event.whenBroadcastReceived(o.QIZ, async function() {
             this.Looks.hide();
-        }), f.Event.whenBroadcastReceived(o.COMPLETE, async function() {
+        }), b.Event.whenBroadcastReceived(o.COMPLETE, async function() {
             this.Looks.hide();
-        }), f.Event.whenBroadcastReceived(o.ANSWER, async function(n) {
+        }), b.Event.whenBroadcastReceived(o.ANSWER, async function(n) {
             this.Motion.Position.xy = [
                 0,
                 80

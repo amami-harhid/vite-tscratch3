@@ -185,7 +185,7 @@ Pg.setting = async function setting() {
         // ずっと繰り返す（もしボールに触れたなら繰り返しを抜ける）
         for(;;){
             // もしボールに触れたなら
-            if(this.Sensing.isTouchingToSprites([ball])){
+            if(this.Sensing.Sprite.isTouching([ball])){
                 // 得点ＵＰ
                 monitors.get( Constant.MonitorPoint).value += 1;
                 // Pew の音を鳴らす
@@ -227,7 +227,7 @@ Pg.setting = async function setting() {
         // ずっと繰り返す ( マウスに触れたときに繰り返しを抜ける )
         for(;;){
             // マウスに触れたとき
-            if(this.Sensing.isMouseTouching()){
+            if(this.Sensing.Mouse.isTouching){
                 // このスプライトの他のスクリプトを止める。
                 this.Control.stopOtherScripts(this);
                 // メッセージ（ Question )を送る
@@ -307,7 +307,7 @@ Pg.setting = async function setting() {
         // スペースキーが押されたかの判定処理
         const key = Lib.Keyboard.SPACE
         const isKeyDown = ()=>{
-            return this.Sensing.isKeyDown(key)
+            return this.Sensing.Key.isDown(key)
         }
         // スペースキーが押されるまで待つ
         await this.Control.waitUntil(isKeyDown);
@@ -331,7 +331,7 @@ Pg.setting = async function setting() {
         for(;;){
             // 10 進ませる
             this.Motion.Move.steps(10);
-            if(this.Sensing.isTouchingToSprites([bar])){
+            if(this.Sensing.Sprite.isTouching([bar])){
                 // バースプライトに触れたとき
                 // ボールスプライトのY座標を少しだけ 上にあげる
                 // (バースプライト３倍の高さを ボールスプライトの y座標に加算する）
@@ -339,7 +339,7 @@ Pg.setting = async function setting() {
                 const speed = positionRegist.get(3) - bar.Motion.Position.x;
                 const degree = this.Motion.Direction.degree;
                 this.Motion.Direction.degree += (Lib.getRandomValueInRange(-5, -5)*speed -degree);
-            }else if(this.Sensing.isTouchingToSprites([bottom])) {
+            }else if(this.Sensing.Sprite.isTouching([bottom])) {
                 // ボタンスプライトに触れたとき
                 // 繰り返しを抜ける
                 break;
